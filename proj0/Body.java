@@ -9,7 +9,6 @@ public class Body {
     public double yyVel;
     public double mass;
     public String imgFileName;
-    public double GravitationalConstant = 6.67e-11;
     public Body(double xP, double yP, double xV, double yV, double m, String img) {
         xxPos = xP;
         yyPos = yP;
@@ -32,6 +31,7 @@ public class Body {
         return distance;
     }
     public double calcForceExertedBy(Body b2) {
+        double GravitationalConstant = 6.67e-11;
         if (this.equals(b2)) {
             return 0;
         }
