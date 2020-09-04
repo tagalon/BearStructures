@@ -1,6 +1,6 @@
-import java.lang.reflect.Array;
+// import java.lang.reflect.Array;
 
-import sun.tools.tree.ThisExpression;
+// import sun.tools.tree.ThisExpression;
 
 public class Body {
     public double xxPos;
@@ -72,5 +72,22 @@ public class Body {
             calcNetY += calcForceExertedByY(planet);
         }
         return calcNetY;
+    }
+    public void update(double dt, double fX, double fY) {
+        double aNetX = fX / this.mass;
+        double aNetY = fY / this.mass;
+        double vX = this.xxVel + dt * aNetX;
+        double vY = this.yyVel + dt * aNetY;
+        double pX = this.xxPos + dt * vX;
+        double pY = this.yyPos + dt * vY;
+        this.xxVel = vX;
+        this.yyVel = vY; 
+        this.xxPos = pX;
+        this.yyPos = pY;
+        return;                                                                                                                                                                                 
+    }
+    public void draw() {
+        StdDraw.picture(this.xxPos, this.yyPos, "images/" + this.imgFileName);
+        return;
     }
 }
