@@ -11,6 +11,7 @@ public class DebugExercise3 {
             int numAvailable = in.readInt();
             if (foodType.equals("turnip")) {
                 int newTotal = totalTurnips + numAvailable;
+                /** newTotal can be less than 0 as some of the stores contain less than 0 turnips, which doesn't make sense **/
                 totalTurnips = newTotal;
             }
         }

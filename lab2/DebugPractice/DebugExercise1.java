@@ -1,6 +1,6 @@
 /**
  * Exercise for learning how the debug, breakpoint, and step-into
- * feature work.
+ * feature work. Hello!
  */
 public class DebugExercise1 {
     public static int divideThenRound(int top, int bottom) {
