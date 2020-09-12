@@ -1,7 +1,8 @@
 /**
  * @author Vivant Sakore on 1/29/2020
  */
-/** @NikilSunku I don't know if we filled out the form, but we decided in the first lab that we were going to be partners for the semester **/
+/** @source NikilSunku I don't know if we filled out the form, but we decided in the first lab that we were going to be partners for the semester **/
+/** @source NikilSunku provided me with the starter code for the lab as I didn't have the lab3 starter file in my code, so he sent me a zipped file of his starter code and we both did the lab fully together **/
 public class BuggyIntDList extends IntDList {
 
     /**
