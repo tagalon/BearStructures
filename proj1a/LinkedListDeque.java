@@ -1,9 +1,9 @@
 public class LinkedListDeque<T> {
     /* Helper class for instantiating the nodes for the LinkedListDeque */
     private class Node {
-        public Node prev;
-        public T item;
-        public Node next;
+        private Node prev;
+        private T item;
+        private Node next;
 
         public Node(Node p, T i, Node n) {
             prev = p;
@@ -23,7 +23,7 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    /* The addFirst function adds the first T item to the sentinel and takes in the input, T item. */
+    /* The addFirst function adds the first T item to the sentinel. */
     public void addFirst(T item) {
         Node temp = sentinel.next;
         sentinel.next = new Node(null, item, null);
@@ -71,7 +71,7 @@ public class LinkedListDeque<T> {
         System.out.println("");
     }
 
-    /* The get function is a helper function used to get the indexed value T and uses the actual object as argument rather than calling it through a method. */
+    /* The get function is a helper function used to get the indexed value T using int index and the sentinel */
     public T get(int index, Node nodeDeque) {
         if (index == 0) {
             return nodeDeque.item;
@@ -80,16 +80,16 @@ public class LinkedListDeque<T> {
         }
     }
 
-    /* The getRecursive function returns given item from certain index located within the sentinel, recursively. */
+    /* The getRecursive function returns given item from certain index located within the sentinel. */
     public T getRecursive(int index) {
         if (index == 0) {
-            return get(0 , sentinel.next);
+            return get(0, sentinel.next);
         } else {
             return get(index - 1, sentinel.next.next);
         }
     }
 
-    /* The isEmpty function checks whether the sentinel is empty or not and returns a boolean value indicating if it is. */
+    /* The isEmpty function checks returns a boolean value indicating if it the sentinel is empty. */
     public boolean isEmpty() {
         return (size == 0);
     }

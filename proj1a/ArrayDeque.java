@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-
 public class ArrayDeque<T> {
     private T[] elements;
     private int size;
@@ -14,10 +12,10 @@ public class ArrayDeque<T> {
         size = 0;
     }
 
-    /* The upsize function copies original elements into a larger empty list, using int capacity as an argument. */
+    /* The upsize function copies original elements into a larger empty list. */
     private void upsize(int capacity) {
         T[] newElements = (T[]) new Object[capacity];
-        for(int i = 0; i < elements.length; i ++) {
+        for (int i = 0; i < elements.length; i++) {
             newElements[i] = get(i);
         }
         nextFirst = newElements.length - 1;
@@ -25,10 +23,10 @@ public class ArrayDeque<T> {
         elements = newElements;
     }
 
-    /* The downsize function copies original elements into a list that\'s smaller than the original list, using no arguments other than elements itself. */
+    /* The downsize function copies original elements into a list that's half the length. */
     private void downsize() {
         T[] newElements = (T[]) new Object[elements.length / 2];
-        for(int i = 0; i < size - 1; i ++) {
+        for (int i = 0; i < size - 1; i++) {
             newElements[i] = get(i);
         }
         nextFirst = newElements.length - 1;
@@ -68,14 +66,14 @@ public class ArrayDeque<T> {
     /* The addLast function adds the last T item to the ArrayDeque object array, elements */
     public void addLast(T item) {
         if ((elements.length == size) && (size != 0)) {
-            upsize( size * 2);
+            upsize(size * 2);
         }
         elements[nextLast] = item;
         checkLast();
         size += 1;
     }
 
-    /* The isEmpty function returns a boolean value, indicating whether or not elements is an empty array. */
+    /* The isEmpty function returns a boolean value, indicating if the list is empty or not */
     public boolean isEmpty() {
         return (size == 0);
     }
@@ -98,7 +96,7 @@ public class ArrayDeque<T> {
     }
 
     /* The checkRemoveLast is a helper function for keeping track of nextFirst inside removeFirst */
-    public void checkRemoveFirst() {
+    private void checkRemoveFirst() {
         if (nextFirst == elements.length - 1) {
             nextFirst = 0;
         } else {
@@ -107,7 +105,7 @@ public class ArrayDeque<T> {
     }
 
     /* The checkRemoveLast is a helper function for keeping track of nextLast inside removeLast. */
-    public void checkRemoveLast() {
+    private void checkRemoveLast() {
         if (nextLast == 0) {
             nextLast = elements.length - 1;
         } else {
@@ -123,21 +121,21 @@ public class ArrayDeque<T> {
         if ((size - 1 < .25 * elements.length) && (elements.length >= 16)) {
             downsize();
         }
-        T first = elements[nextFirst];
-        checkFirstNull();
+        T first = elements[nextFirst - 1];
+        elements[nextFirst - 1] = null;
         checkRemoveFirst();
         size -= 1;
         return first;
     }
 
     /* The checkFirstNull is a helper function for removing first T element, when nextFirst is at the end of the list and deletes the element.*/
-    private void checkFirstNull() {
-        if (nextFirst + 1 == elements.length) {
-            elements[0] = null;
-        } else {
-            elements[nextFirst] = null;
-        }
-    }
+//    private void checkFirstNull() {
+//        if (nextFirst + 1 == elements.length) {
+//            elements[0] = null;
+//        } else {
+//            elements[nextFirst] = null;
+//        }
+//    }
 
     /* The removeLast function removes the last T element within the array elements. */
     public T removeLast() {
@@ -147,10 +145,10 @@ public class ArrayDeque<T> {
         if (size - 1 < .25 * elements.length && elements.length >= 16) {
             downsize();
         }
-        T last = elements[size - 1];
-        elements[size -1] = null;
+        T last = elements[nextLast - 1];
+        elements[nextLast - 1] = null;
         checkRemoveLast();
-        size -=1;
+        size -= 1;
         return last;
     }
 }
