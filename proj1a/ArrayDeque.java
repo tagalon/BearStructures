@@ -121,12 +121,9 @@ public class ArrayDeque<T> {
         if ((size - 1 < .25 * elements.length) && (elements.length >= 16)) {
             downsize();
         }
-        if (nextFirst - 1 < 0) {
-            nextFirst = elements.length;
-        }
-        T first = elements[nextFirst - 1];
-        elements[nextFirst - 1] = null;
         checkRemoveFirst();
+        T first = elements[nextFirst];
+        elements[nextFirst] = null;
         size -= 1;
         return first;
     }
@@ -148,12 +145,9 @@ public class ArrayDeque<T> {
         if (size - 1 < .25 * elements.length && elements.length >= 16) {
             downsize();
         }
-        if (nextLast - 1 < 0) {
-            nextLast = elements.length;
-        }
-        T last = elements[nextLast - 1];
-        elements[nextLast - 1] = null;
         checkRemoveLast();
+        T last = elements[nextLast];
+        elements[nextLast] = null;
         size -= 1;
         return last;
     }
