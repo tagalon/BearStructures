@@ -16,7 +16,7 @@ public class LinkedListDeque<T> {
     private int size;
 
     /* The LinkedListDeque creates the empty object LinkedListDeque and assigns it to sentinel. */
-    LinkedListDeque() {
+    public LinkedListDeque() {
         sentinel = new Node(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
@@ -45,6 +45,9 @@ public class LinkedListDeque<T> {
 
     /* The removeFirst function removes the first item from the sentinel and returns the T item. */
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         Node temp = sentinel.next;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
@@ -54,6 +57,9 @@ public class LinkedListDeque<T> {
 
     /* The removeLast function removes the last item from the sentinel and returns the T item. */
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         Node temp = sentinel.prev;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
@@ -86,7 +92,7 @@ public class LinkedListDeque<T> {
     }
 
     /* The getR function is a helper function used to get the indexed value T */
-    public T getR(int index, Node nodeDeque) {
+    private T getR(int index, Node nodeDeque) {
         if (index == 0) {
             return nodeDeque.item;
         } else {
