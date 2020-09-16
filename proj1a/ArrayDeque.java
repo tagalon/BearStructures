@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
     private int nextLast;
 
     /* The ArrayDeque function creates empty object for Array Deque. */
-    ArrayDeque() {
+    public ArrayDeque() {
         elements = (T[]) new Object[8];
         nextFirst = 7;
         nextLast = 0;
@@ -92,7 +92,6 @@ public class ArrayDeque<T> {
 
     /* The get function returns a T indexed value of the ArrayDeque object. */
     public T get(int index) {
-        checkRemoveFirst();
         return elements[(nextFirst + index) % elements.length];
     }
 
@@ -129,6 +128,15 @@ public class ArrayDeque<T> {
         return first;
     }
 
+    /* The checkFirstNull is a helper function for removing first T element */
+//    private void checkFirstNull() {
+//        if (nextFirst + 1 == elements.length) {
+//            elements[0] = null;
+//        } else {
+//            elements[nextFirst] = null;
+//        }
+//    }
+
     /* The removeLast function removes the last T element within the array elements. */
     public T removeLast() {
         if (size == 0) {
@@ -142,5 +150,16 @@ public class ArrayDeque<T> {
         elements[nextLast] = null;
         size -= 1;
         return last;
+    }
+    public static void main(String[] args) {
+        ArrayDeque L = new ArrayDeque();
+        L.addLast(1);
+        L.addLast(2);
+        L.addLast(3);
+        L.addLast(4);
+        L.addLast(5);
+        L.addLast(6);
+        L.removeFirst();
+        L.removeFirst();
     }
 }

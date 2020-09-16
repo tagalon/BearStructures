@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-
 public class LinkedListDeque<T> {
     /* Helper class for instantiating the nodes for the LinkedListDeque */
     private class Node {
@@ -18,7 +16,7 @@ public class LinkedListDeque<T> {
     private int size;
 
     /* The LinkedListDeque creates the empty object LinkedListDeque and assigns it to sentinel. */
-    LinkedListDeque() {
+    public LinkedListDeque() {
         sentinel = new Node(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
