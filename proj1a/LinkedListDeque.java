@@ -16,7 +16,7 @@ public class LinkedListDeque<T> {
     private int size;
 
     /* The LinkedListDeque creates the empty object LinkedListDeque and assigns it to sentinel. */
-    public LinkedListDeque() {
+    LinkedListDeque() {
         sentinel = new Node(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
