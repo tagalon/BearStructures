@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
     private int nextLast;
 
     /* The ArrayDeque function creates empty object for Array Deque. */
-    ArrayDeque() {
+    public ArrayDeque() {
         elements = (T[]) new Object[8];
         nextFirst = 7;
         nextLast = 0;
@@ -26,7 +26,7 @@ public class ArrayDeque<T> {
     /* The downsize function copies original elements into a list that's half the length. */
     private void downsize() {
         T[] newElements = (T[]) new Object[elements.length / 2];
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < elements.length / 2; i++) {
             newElements[i] = get(i);
         }
         nextFirst = newElements.length - 1;
@@ -141,16 +141,5 @@ public class ArrayDeque<T> {
         elements[nextLast] = null;
         size -= 1;
         return last;
-    }
-    public static void main(String[] args) {
-        ArrayDeque L = new ArrayDeque();
-        L.addLast(1);
-        L.addLast(2);
-        L.addLast(3);
-        L.addLast(4);
-        L.addLast(5);
-        L.addLast(6);
-        L.removeFirst();
-        L.removeFirst();
     }
 }
