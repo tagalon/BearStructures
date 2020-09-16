@@ -5,7 +5,7 @@ public class LinkedListDeque<T> {
         private T item;
         private Node next;
 
-        public Node(Node p, T i, Node n) {
+        private Node(Node p, T i, Node n) {
             prev = p;
             item = i;
             next = n;
@@ -71,21 +71,35 @@ public class LinkedListDeque<T> {
         System.out.println("");
     }
 
-    /* The get function is a helper function used to get the indexed value T */
-    public T get(int index, Node nodeDeque) {
+    /* The get function returns given T indexed item iteratively. */
+    public T get(int index) {
+        if (index >= size) {
+            return null;
+        }
+        int startIndex = 0;
+        Node temp = sentinel.next;
+        while (startIndex < index) {
+            temp = temp.next;
+            startIndex += 1;
+        }
+        return temp.item;
+    }
+
+    /* The getR function is a helper function used to get the indexed value T */
+    public T getR(int index, Node nodeDeque) {
         if (index == 0) {
             return nodeDeque.item;
         } else {
-            return get(index - 1, nodeDeque.next);
+            return getR(index - 1, nodeDeque.next);
         }
     }
 
     /* The getRecursive function returns given T indexed item in sentinel. */
     public T getRecursive(int index) {
-        if (index == 0) {
-            return get(0, sentinel.next);
+        if (index >= size) {
+            return null;
         } else {
-            return get(index - 1, sentinel.next.next);
+            return getR(index, sentinel.next);
         }
     }
 
