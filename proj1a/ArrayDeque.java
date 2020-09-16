@@ -119,7 +119,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if ((size < .25 * elements.length) && (elements.length >= 16)) {
+        if ((size - 1 < .25 * elements.length) && (elements.length >= 16)) {
             downsize();
         }
         checkRemoveFirst();
@@ -129,21 +129,12 @@ public class ArrayDeque<T> {
         return first;
     }
 
-    /* The checkFirstNull is a helper function for removing first T element */
-//    private void checkFirstNull() {
-//        if (nextFirst + 1 == elements.length) {
-//            elements[0] = null;
-//        } else {
-//            elements[nextFirst] = null;
-//        }
-//    }
-
     /* The removeLast function removes the last T element within the array elements. */
     public T removeLast() {
         if (size == 0) {
             return null;
         }
-        if (size < .25 * elements.length && elements.length >= 16) {
+        if (size - 1 < .25 * elements.length && elements.length >= 16) {
             downsize();
         }
         checkRemoveLast();
