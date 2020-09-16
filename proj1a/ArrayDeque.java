@@ -92,7 +92,8 @@ public class ArrayDeque<T> {
 
     /* The get function returns a T indexed value of the ArrayDeque object. */
     public T get(int index) {
-        return elements[(nextFirst + index + 1) % elements.length];
+        checkRemoveFirst();
+        return elements[(nextFirst + index) % elements.length];
     }
 
     /* The checkRemoveLast is a helper function for keeping track of nextFirst inside removeFirst */
@@ -118,7 +119,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if ((size - 1 < .25 * elements.length) && (elements.length >= 16)) {
+        if ((size < .25 * elements.length) && (elements.length >= 16)) {
             downsize();
         }
         checkRemoveFirst();
@@ -142,7 +143,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        if (size - 1 < .25 * elements.length && elements.length >= 16) {
+        if (size < .25 * elements.length && elements.length >= 16) {
             downsize();
         }
         checkRemoveLast();
@@ -150,16 +151,5 @@ public class ArrayDeque<T> {
         elements[nextLast] = null;
         size -= 1;
         return last;
-    }
-    public static void main(String[] args) {
-        ArrayDeque L = new ArrayDeque();
-        L.addLast(1);
-        L.addLast(2);
-        L.addLast(3);
-        L.addLast(4);
-        L.addLast(5);
-        L.addLast(6);
-        L.removeFirst();
-        L.removeFirst();
     }
 }
