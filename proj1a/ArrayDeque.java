@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
     private int nextLast;
 
     /* The ArrayDeque function creates empty object for Array Deque. */
-    public ArrayDeque() {
+    ArrayDeque() {
         elements = (T[]) new Object[8];
         nextFirst = 7;
         nextLast = 0;
@@ -90,7 +90,7 @@ public class ArrayDeque<T> {
         }
     }
 
-    /* The get function returns a T value of the ArrayDeque object, elements, based on the index of the array. */
+    /* The get function returns a T indexed value of the ArrayDeque object. */
     public T get(int index) {
         return elements[(nextFirst + index + 1) % elements.length];
     }
@@ -121,6 +121,9 @@ public class ArrayDeque<T> {
         if ((size - 1 < .25 * elements.length) && (elements.length >= 16)) {
             downsize();
         }
+        if (nextFirst - 1 < 0) {
+            nextFirst = elements.length;
+        }
         T first = elements[nextFirst - 1];
         elements[nextFirst - 1] = null;
         checkRemoveFirst();
@@ -128,7 +131,7 @@ public class ArrayDeque<T> {
         return first;
     }
 
-    /* The checkFirstNull is a helper function for removing first T element, when nextFirst is at the end of the list and deletes the element.*/
+    /* The checkFirstNull is a helper function for removing first T element */
 //    private void checkFirstNull() {
 //        if (nextFirst + 1 == elements.length) {
 //            elements[0] = null;
@@ -145,10 +148,24 @@ public class ArrayDeque<T> {
         if (size - 1 < .25 * elements.length && elements.length >= 16) {
             downsize();
         }
+        if (nextLast - 1 < 0) {
+            nextLast = elements.length;
+        }
         T last = elements[nextLast - 1];
         elements[nextLast - 1] = null;
         checkRemoveLast();
         size -= 1;
         return last;
+    }
+    public static void main(String[] args) {
+        ArrayDeque L = new ArrayDeque();
+        L.addLast(1);
+        L.addLast(2);
+        L.addLast(3);
+        L.addLast(4);
+        L.addLast(5);
+        L.addLast(6);
+        L.removeFirst();
+        L.removeFirst();
     }
 }

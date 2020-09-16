@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+
 public class LinkedListDeque<T> {
     /* Helper class for instantiating the nodes for the LinkedListDeque */
     private class Node {
@@ -16,7 +18,7 @@ public class LinkedListDeque<T> {
     private int size;
 
     /* The LinkedListDeque creates the empty object LinkedListDeque and assigns it to sentinel. */
-    public LinkedListDeque() {
+    LinkedListDeque() {
         sentinel = new Node(null, null, null);
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
@@ -71,7 +73,7 @@ public class LinkedListDeque<T> {
         System.out.println("");
     }
 
-    /* The get function is a helper function used to get the indexed value T using int index and the sentinel */
+    /* The get function is a helper function used to get the indexed value T */
     public T get(int index, Node nodeDeque) {
         if (index == 0) {
             return nodeDeque.item;
@@ -80,7 +82,7 @@ public class LinkedListDeque<T> {
         }
     }
 
-    /* The getRecursive function returns given item from certain index located within the sentinel. */
+    /* The getRecursive function returns given T indexed item in sentinel. */
     public T getRecursive(int index) {
         if (index == 0) {
             return get(0, sentinel.next);
@@ -89,7 +91,7 @@ public class LinkedListDeque<T> {
         }
     }
 
-    /* The isEmpty function checks returns a boolean value indicating if it the sentinel is empty. */
+    /* The isEmpty function checks returns a boolean value indicating if the sentinel is empty. */
     public boolean isEmpty() {
         return (size == 0);
     }
