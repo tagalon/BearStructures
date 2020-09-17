@@ -1,4 +1,4 @@
-/*import org.junit.Test;
+import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestPalindrome {
@@ -15,4 +15,37 @@ public class TestPalindrome {
         }
         assertEquals("persiflage", actual);
     }
-}     Uncomment this class once you've created your Palindrome class. */
+    
+    @Test
+    public void testIsPalindrome() {
+        Boolean truePalindrome = palindrome.isPalindrome("poop");
+        Boolean nullPalindrome = palindrome.isPalindrome(null);
+        Boolean falsePalindrome = palindrome.isPalindrome("cat");
+        Boolean emptyPalindrome = palindrome.isPalindrome("");
+        Boolean charPalindrome = palindrome.isPalindrome("a");
+        assertEquals(true, truePalindrome);
+        assertFalse(nullPalindrome);
+        assertEquals(false, falsePalindrome);
+        assertTrue(emptyPalindrome);
+        assertTrue(charPalindrome);
+    }
+
+    @Test
+    public void testIsPalindromeCC() {
+        OffByOne ob = new OffByOne();
+        Boolean nullVal = ob.equalChars('a', 'c');
+        Boolean trueVal = ob.equalChars('a', 'b');
+        Boolean falseVal = ob.equalChars('a', 'a');
+        Boolean truePal = palindrome.isPalindrome("poop", ob);
+        Boolean falsePal = palindrome.isPalindrome("cat", ob);
+        Boolean emptyPal = palindrome.isPalindrome("", ob);
+        Boolean emptyOb = palindrome.isPalindrome("tattarrattat", null);
+        assertFalse(nullVal);
+        assertTrue(trueVal);
+        assertFalse(falseVal);
+        assertTrue(truePal);
+        assertFalse(falsePal);
+        assertTrue(emptyPal);
+        assertTrue(emptyOb);
+    }
+}    
