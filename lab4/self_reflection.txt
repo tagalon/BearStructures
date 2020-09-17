@@ -4,60 +4,57 @@ ArrayDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: Using the constructers such as isEmpty() and isSize() to make my code more efficient.
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: I feel like my code implementation is correct, as I used alot of the helper methods to make my code make sense whenever I'm adding or removing from my Deque. The resize implementation was broken into two seperate functions within my implementation where I did downsize and upsize.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: There was one part in both of my get Methods where it didn't account for negative indexes, although you shouldn't be calling for negative indexes since Java doesn't refer to them in arrays. In addition to this, the class solution utilized a wrapIndex, where I just accounted for it within my get method.
 
 Q: What did you learn by talking to your partner about writing ArrayDeque?
 
-A:
+A: I learned that you could do the resize method in just one method where I can account for both the upsizing and downsizing
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A: How to go about the resize method and starting the project earlier so I could've had my questions clarified over Office Hours.
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
-A:
-
------
+A: Utilizing the functions isEmpty() and size() rather than referring to the instances themselves, but otherwise, I like the implementation I used as it is the easiest way for me to understand how I coded for the project.
 
 LinkedListDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: Accounting for the errors in user inputs, say for example, negative indexes wouldn't be evaluated in my code and so my functions wouldn't return anything. I should've made a case where I accounted for the negative indexes where I return a false value.
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: The same logic was utilized in the project solution.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: Using the constructers such as isEmpty() and isSize() to make my code more efficient.
 
 Q: What did you learn by talking to your partner about writing LinkedListDeque?
 
-A:
+A: You could do the pointers when you're creating the new Node itself by nesting sentinel within next and prev parameters.
 
 Q: What do you wish you would have known before writing LinkedListDeque, if anything?
 
-A:
+A: I wish I would've known to use my isEmpty() and size() functions in order to have good practice when I'm coding projects.
 
 Q: If you wrote LinkedListDeque again, what would you do differently, if anything?
 
-A:
-
------
+A: I would utilize both isEmpty() and size(), and also account for the error inputs that can be passed into the function by returning false for those special cases.
 
 Meta:
 
 Q: Did you like this design review process? Anything we should do differently next time?
 
-A: 
+A: I liked the design review process as I followed the same logic, but I would've liked to make more code look more efficient by referring to the pointers
+inside the newly created Node.
