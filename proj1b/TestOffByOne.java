@@ -1,4 +1,4 @@
-/*import org.junit.Test;
+import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestOffByOne {
@@ -6,5 +6,13 @@ public class TestOffByOne {
     // new ones, or the autograder might be upset.
     static CharacterComparator offByOne = new OffByOne();
 
-    // Your tests go here.
-} Uncomment this class once you've created your CharacterComparator interface and OffByOne class. **/
+    @Test
+    public void testIsPalindromeCC() {
+        Boolean nullVal = offByOne.equalChars('a', 'c');
+        Boolean trueVal = offByOne.equalChars('a', 'b');
+        Boolean falseVal = offByOne.equalChars('a', 'a');
+        assertFalse(nullVal);
+        assertTrue(trueVal);
+        assertFalse(falseVal);
+    }
+}

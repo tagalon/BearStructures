@@ -8,22 +8,20 @@ public class Palindrome {
         return reverseWord;
     }
 
-    /* Helper function which returns boolean value indicating if the word is a palindrome */
-    public boolean isPalindromeHelper(Deque<Character> word) {
+    /* Helper function which returns boolean value on the word being a palindrome */
+    private boolean isPalindromeHelper(Deque<Character> word) {
         if (word == null) {
             return false;
-        }
-        else if (word.size() == 1 | word.isEmpty()) {
+        } else if (word.size() == 1 | word.isEmpty()) {
             return true;
-        }
-        else if (word.removeFirst() == word.removeLast()) {
+        } else if (word.removeFirst() == word.removeLast()) {
             return isPalindromeHelper(word);
         } else {
             return false;
         }
     }
 
-    /* Returns returns boolean value indicating if the word is a palindrome using isPalindromeHelper */
+    /* Returns returns boolean value on the word being a palindrome using isPalindromeHelper */
     public boolean isPalindrome(String word) {
         if (word == null) {
             return false;
@@ -33,8 +31,8 @@ public class Palindrome {
         }
     }
 
-    /* Returns boolean value indicating if the word is a palindrome using either OffByN or OffByOne */
-    public boolean ccPalindromeHelper(Deque<Character> word, CharacterComparator cc) {
+    /* Returns boolean value indicating if the word is a palindrome using OffByOne */
+    private boolean ccPalindromeHelper(Deque<Character> word, CharacterComparator cc) {
         if (word == null) {
             return false;
         }

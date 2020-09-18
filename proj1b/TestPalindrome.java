@@ -33,16 +33,10 @@ public class TestPalindrome {
     @Test
     public void testIsPalindromeCC() {
         OffByOne ob = new OffByOne();
-        Boolean nullVal = ob.equalChars('a', 'c');
-        Boolean trueVal = ob.equalChars('a', 'b');
-        Boolean falseVal = ob.equalChars('a', 'a');
         Boolean truePal = palindrome.isPalindrome("poop", ob);
         Boolean falsePal = palindrome.isPalindrome("cat", ob);
         Boolean emptyPal = palindrome.isPalindrome("", ob);
         Boolean emptyOb = palindrome.isPalindrome("tattarrattat", null);
-        assertFalse(nullVal);
-        assertTrue(trueVal);
-        assertFalse(falseVal);
         assertTrue(truePal);
         assertFalse(falsePal);
         assertTrue(emptyPal);
