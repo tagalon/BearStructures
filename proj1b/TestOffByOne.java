@@ -9,8 +9,18 @@ public class TestOffByOne {
     @Test
     public void testIsPalindromeCC() {
         Boolean nullVal = offByOne.equalChars('a', 'c');
+        Boolean nullVal2 = offByOne.equalChars('c', 'a');
         Boolean trueVal = offByOne.equalChars('a', 'b');
         Boolean falseVal = offByOne.equalChars('a', 'a');
-
+        Boolean capVal = offByOne.equalChars('A', 'B');
+        Boolean capLowVal = offByOne.equalChars('A', 'b');
+        Boolean numVal = offByOne.equalChars('1', '2');
+        assertTrue(trueVal);
+        assertTrue(numVal);
+        assertTrue(capVal);
+        assertFalse(nullVal2);
+        assertFalse(capLowVal);
+        assertFalse(falseVal);
+        assertFalse(nullVal);
     }
 }

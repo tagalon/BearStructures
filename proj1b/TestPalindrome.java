@@ -33,15 +33,18 @@ public class TestPalindrome {
     @Test
     public void testIsPalindromeCC() {
         OffByOne ob = new OffByOne();
+        OffByN nOb = new OffByN(1);
         Boolean truePal = palindrome.isPalindrome("cab", ob);
         Boolean falsePal = palindrome.isPalindrome("cat", ob);
         Boolean emptyPal = palindrome.isPalindrome("", ob);
         Boolean emptyOb = palindrome.isPalindrome("tattarrattat", null);
         Boolean nulPal = palindrome.isPalindrome(null, ob);
+        Boolean truePal2 = palindrome.isPalindrome("detrude", nOb);
         assertTrue(truePal);
         assertFalse(falsePal);
         assertTrue(emptyPal);
         assertTrue(emptyOb);
         assertFalse(nulPal);
+        assertTrue(truePal2);
     }
 }

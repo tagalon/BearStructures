@@ -38,10 +38,9 @@ public class Palindrome {
         } else if (word.size() == 1 || word.isEmpty()) {
             return true;
         } else if (cc.equalChars(word.removeFirst(), word.removeLast())) {
-            return isPalindromeHelper(word);
-        } else {
-            return false;
+            return ccPalindromeHelper(word, cc);
         }
+        return false;
     }
 
     /* Returns boolean value indicating the word is a palindrome using CharacterComparator */
