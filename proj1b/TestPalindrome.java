@@ -37,9 +37,11 @@ public class TestPalindrome {
         Boolean falsePal = palindrome.isPalindrome("cat", ob);
         Boolean emptyPal = palindrome.isPalindrome("", ob);
         Boolean emptyOb = palindrome.isPalindrome("tattarrattat", null);
+        Boolean nulPal = palindrome.isPalindrome(null, ob);
         assertTrue(truePal);
         assertFalse(falsePal);
         assertTrue(emptyPal);
         assertTrue(emptyOb);
+        assertFalse(nulPal);
     }
 }
