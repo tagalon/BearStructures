@@ -35,7 +35,7 @@ public class Palindrome {
     private boolean ccPalindromeHelper(Deque<Character> word, CharacterComparator cc) {
         if (word == null) {
             return false;
-        } else if (word.size() == 1 | word.isEmpty()) {
+        } else if (word.size() == 1 || word.isEmpty()) {
             return true;
         } else if (cc.equalChars(word.removeFirst(), word.removeLast())) {
             return isPalindromeHelper(word);
