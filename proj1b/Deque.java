@@ -1,7 +1,9 @@
 public interface Deque<Item> {
     void addFirst(Item item);
     void addLast(Item item);
-    boolean isEmpty();
+    default boolean isEmpty() {
+        return (size() == 0);
+    }
     int size();
     void printDeque();
     Item removeFirst();

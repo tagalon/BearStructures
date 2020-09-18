@@ -35,18 +35,16 @@ public class Palindrome {
     private boolean ccPalindromeHelper(Deque<Character> word, CharacterComparator cc) {
         if (word == null) {
             return false;
-        }
-        else if (word.size() == 1 | word.isEmpty()) {
+        } else if (word.size() == 1 | word.isEmpty()) {
             return true;
-        }
-        else if (cc.equalChars(word.removeFirst(), (char) (word.removeLast() + 1))) {
+        } else if (cc.equalChars(word.removeFirst(), word.removeLast())) {
             return isPalindromeHelper(word);
         } else {
             return false;
         }
     }
 
-    /* Returns boolean value indicating if the word is a palindrome using either OffByN or OffByOne using ccPalindromeHelper */
+    /* Returns boolean value indicating the word is a palindrome using CharacterComparator */
     public boolean isPalindrome(String word, CharacterComparator cc) {
         Deque<Character> wordDeque = wordToDeque(word);
         if (cc == null) {

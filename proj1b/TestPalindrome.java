@@ -33,7 +33,7 @@ public class TestPalindrome {
     @Test
     public void testIsPalindromeCC() {
         OffByOne ob = new OffByOne();
-        Boolean truePal = palindrome.isPalindrome("poop", ob);
+        Boolean truePal = palindrome.isPalindrome("cab", ob);
         Boolean falsePal = palindrome.isPalindrome("cat", ob);
         Boolean emptyPal = palindrome.isPalindrome("", ob);
         Boolean emptyOb = palindrome.isPalindrome("tattarrattat", null);
@@ -42,4 +42,4 @@ public class TestPalindrome {
         assertTrue(emptyPal);
         assertTrue(emptyOb);
     }
-}    
+}
