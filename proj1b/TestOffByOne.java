@@ -11,12 +11,8 @@ public class TestOffByOne {
         Boolean nullVal = offByOne.equalChars('a', 'c');
         Boolean trueVal = offByOne.equalChars('a', 'b');
         Boolean falseVal = offByOne.equalChars('a', 'a');
-        Boolean capTrueVal = offByOne.equalChars('B', 'a');
-        Boolean capNumVal = offByOne.equalChars('6', '5');
         assertFalse(nullVal);
         assertTrue(trueVal);
         assertFalse(falseVal);
-        assertTrue(capTrueVal);
-        assertFalse(capNumVal);
     }
 }
