@@ -124,7 +124,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
      */
     @Override
     public T peek() {
-        if (first == capacity()) {
+        if (first == capacity() || this.isEmpty()) {
             throw new RuntimeException("Ring Buffer overflow");
         }
         return rb[first];
