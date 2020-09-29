@@ -14,6 +14,18 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
     private int fillCount;
     /* Array for storing the buffer data. */
     private T[] rb;
+    /**
+     * Create a new ArrayRingBuffer with the given capacity.
+     */
+
+    public ArrayRingBuffer(int capacity) {
+        // TODO: Create new array with capacity elements.
+        //       first, last, and fillCount should all be set to 0.
+        first = 0;
+        last = 0;
+        fillCount = 0;
+        rb = (T[]) new Object[capacity];
+    }
 
     @Override
     public Iterator<T> iterator() {
@@ -46,19 +58,24 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         return fillCount;
     }
 
-    /**
-     * Create a new ArrayRingBuffer with the given capacity.
-     */
-
-    public ArrayRingBuffer(int capacity) {
-        // TODO: Create new array with capacity elements.
-        //       first, last, and fillCount should all be set to 0.
-        first = 0;
-        last = 0;
-        fillCount = 0;
-        rb = (T[]) new Object[capacity];
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        ArrayRingBuffer<T> castO = (ArrayRingBuffer<T>) o;
+        if (castO.capacity() != this.capacity()) {
+            return false;
+        }
+        for (int count = 0; count < capacity(); count ++) {
+            if (this.rb[count] != castO.rb[count]) {
+                return false;
+            }
+        }
+        return true;
     }
-
     /**
      * Adds x to the end of the ring buffer. If there is no room, then
      * throw new RuntimeException("Ring buffer overflow").
@@ -68,6 +85,9 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update
         //       last. Don't worry about throwing the RuntimeException until you
         //       get to task 4.
+        if (fillCount == capacity()) {
+            throw new RuntimeException("Ring Buffer overflow");
+        }
         if (last == rb.length) {
             last = 0;
         }
@@ -85,6 +105,9 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         // TODO: Dequeue the first item. Don't forget to decrease fillCount and
         //       update first. Don't worry about throwing the RuntimeException until you
         //       get to task 4.
+        if (fillCount == 0) {
+            throw new RuntimeException("Ring Buffer underflow");
+        }
         if (first == rb.length) {
             first = 0;
         }
