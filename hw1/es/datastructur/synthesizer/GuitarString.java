@@ -17,7 +17,7 @@ public class GuitarString {
         long cap = Math.round(l);
         int capacity = (int) cap;
         buffer = new ArrayRingBuffer<>(capacity);
-        for (int count = 0; 0 < buffer.capacity(); count++) {
+        for (int count = 0; count < buffer.capacity(); count++) {
             buffer.enqueue(0.0);
         }
     }
