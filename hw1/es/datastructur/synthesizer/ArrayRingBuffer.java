@@ -124,10 +124,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
      */
     @Override
     public T peek() {
-        // TODO: Return the first item. None of your instance variables should
-        //       change. Don't worry about throwing the RuntimeException until you
-        //       get to task 4.
-        return rb[last];
+        return rb[first];
     }
 
 }
