@@ -88,7 +88,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         if (fillCount == capacity()) {
             throw new RuntimeException("Ring Buffer overflow");
         }
-        if (last == rb.length) {
+        if (last == capacity()) {
             last = 0;
         }
         rb[last] = x;
@@ -108,7 +108,7 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         if (fillCount == 0) {
             throw new RuntimeException("Ring Buffer underflow");
         }
-        if (first == rb.length) {
+        if (first == capacity()) {
             first = 0;
         }
         T itemFirst = rb[first];

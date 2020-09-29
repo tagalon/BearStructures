@@ -9,11 +9,8 @@ import static org.junit.Assert.*;
 public class TestArrayRingBuffer {
     @Test
     public void someTest() {
-//        ArrayRingBuffer arb = new ArrayRingBuffer(12);
-//        ArrayRingBuffer arb2 = new ArrayRingBuffer(7);
-//        arb.enqueue(2);
-//        arb2.enqueue(2);
-//        arb.enqueue(3);
-//        assertFalse(arb.equals(arb2));
+        GuitarString gui = new GuitarString(440);
+        gui.pluck();
+
     }
 }

@@ -29,10 +29,10 @@ public class GuitarString {
         //       other. This does not mean that you need to check that the numbers
         //       are different from each other. It means you should repeatedly call
         //       Math.random() - 0.5 to generate new random numbers for each array index.
-        for (int count = 0; 0 < buffer.capacity(); count++) {
+        for (int count = 0; count < buffer.capacity(); count++) {
             buffer.dequeue();
         }
-        for (int count = 0; 0 < buffer.capacity(); count++) {
+        for (int count = 0; count < buffer.capacity(); count++) {
             double r = Math.random() - 0.5;
             buffer.enqueue(r);
         }
