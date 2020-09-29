@@ -88,12 +88,12 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         if (fillCount == capacity()) {
             throw new RuntimeException("Ring Buffer overflow");
         }
-        if (last == capacity()) {
-            last = 0;
-        }
         rb[last] = x;
         last += 1;
         fillCount += 1;
+        if (last == capacity()) {
+            last = 0;
+        }
     }
 
     /**
@@ -108,13 +108,13 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         if (fillCount == 0) {
             throw new RuntimeException("Ring Buffer underflow");
         }
-        if (first == capacity()) {
-            first = 0;
-        }
         T itemFirst = rb[first];
         rb[first] = null;
         first += 1;
         fillCount -=1;
+        if (first == capacity()) {
+            first = 0;
+        }
         return itemFirst;
     }
 
@@ -130,7 +130,4 @@ public class ArrayRingBuffer<T> implements BoundedQueue<T> {
         return rb[last];
     }
 
-    // TODO: When you get to part 4, implement the needed code to support
-    //       iteration and equals.
 }
-    // TODO: Remove all comments that say TODO when you're done.
