@@ -15,7 +15,11 @@ public class UnionFind {
 
     /* Throws an exception if v1 is not a valid vertex. */
     private void validate(int v1) {
-        // TODO
+        if (v1 < 0 || v1 >= parent.length ) {
+            throw new IllegalArgumentException(
+                    v1 + " is not a valid vertex between 0 and " + parent.length
+            );
+        }
     }
 
     /* Returns the size of the set v1 belongs to. */
@@ -32,8 +36,7 @@ public class UnionFind {
 
     /* Returns true if nodes v1 and v2 are connected. */
     public boolean isConnected(int v1, int v2) {
-        // TODO
-        return false;
+        return find(v1) == find(v2);
     }
 
     /* Connects two elements v1 and v2 together. v1 and v2 can be any valid 
@@ -43,13 +46,39 @@ public class UnionFind {
        change the sets but may alter the internal structure of the data. */
     public void connect(int v1, int v2) {
         // TODO
+        int rootVOne = find(v1);
+        int rootVTwo = find(v2);
+        if (rootVOne == rootVTwo) {
+            return;
+        } else if (rootVOne != rootVTwo) {
+            if (parent[rootVOne] < parent[rootVTwo]) {
+                parent[rootVOne] += parent[rootVTwo];
+                parent[rootVOne] = rootVTwo;
+            }
+        } else {
+            parent[rootVTwo] += parent[rootVOne];
+            parent[rootVOne] = rootVTwo;
+        }
     }
 
     /* Returns the root of the set v1 belongs to. Path-compression is employed
        allowing for fast search-time. */
     public int find(int v1) {
-        // TODO
-        return -1;
+        validate(v1);
+        if (parent[v1] < 0) {
+            return v1;
+        } else {
+            ArrayList<Integer> fastSearch = new ArrayList<>();
+            int root = v1;
+            while (parent[root] >= 0) {
+                fastSearch.add(root);
+                root = parent[root];
+            }
+            for(int i: fastSearch) {
+                parent[i] = root;
+            }
+            return root;
+        }
     }
 
 }
