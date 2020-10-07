@@ -3,18 +3,23 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    public WeightedQuickUnionUF tracker;
-    public boolean[][] grid;
-    public int openSites;
-    public WeightedQuickUnionUF gridFull;
+    private WeightedQuickUnionUF tracker;
+    private boolean[][] grid;
+    private int openSites;
+    private WeightedQuickUnionUF gridFull;
 
     public Percolation(int N) {
+        if (N <= 0)  {
+            throw new IllegalArgumentException(
+                    "N cannot be 0 or less than 0 itself"
+            );
+        }
         tracker = new WeightedQuickUnionUF(N * N + 2);
         grid = new boolean[N][N];
         gridFull = new WeightedQuickUnionUF(N * N + 2);
         openSites = 0;
         for (int row = 0; row < N; row++) {
-            for(int col = 0; col < N; col++) {
+            for (int col = 0; col < N; col++) {
                 grid[row][col] = false;
             }
         }
@@ -22,9 +27,7 @@ public class Percolation {
 
     private void validate(int v1, int v2) {
         if (v1 < 0 || v1 >= grid.length || v2 < 0 || v2 >= grid.length) {
-            throw new IndexOutOfBoundsException(
-                    v1 + ", " + v2 + " is not a valid index inside the grid where indexes are between (0, 0) and (" + (grid.length - 1) + ", " + (grid.length - 1) + ")"
-            );
+            throw new IndexOutOfBoundsException(v1 + ", " + v2 + " is not a valid index inside the grid");
         }
     }
 
@@ -41,7 +44,7 @@ public class Percolation {
             gridFull.union(row * grid.length + col, grid.length * grid.length);
         }
         if (row == grid.length - 1) {
-            tracker.union( row * grid.length + col, grid.length * grid.length + 1);
+            tracker.union(row * grid.length + col, grid.length * grid.length + 1);
         }
         for (int index = -1; index < 3; index += 2) {
             unionRowHelperGrid(row, col, index);
@@ -93,4 +96,6 @@ public class Percolation {
     public int numberOfOpenSites () {
         return openSites;
     }
+
+    public static void main(String[] args) {}
 }

@@ -2,8 +2,7 @@ package hw2;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 public class PercolationStats {
-    public double percThreshold;
-    public double[] sampleTestArray;
+    private double[] sampleTestArray;
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0)  {
             throw new IllegalArgumentException(
@@ -16,7 +15,7 @@ public class PercolationStats {
             while (!testGrid.percolates()) {
                 testGrid.open(StdRandom.uniform(N), StdRandom.uniform(N));
             }
-            sampleTestArray[index] = testGrid.openSites / Math.pow(N, 2);
+            sampleTestArray[index] = testGrid.numberOfOpenSites() / Math.pow(N, 2);
         }
     }
     public double mean() {
