@@ -37,11 +37,12 @@ public class Percolation {
 
     public void open(int row, int col) {
         validate(row, col);
-        if (indexedGrid(row, col)) {
-            return;
+        if (indexedGrid()) {
+            openSites += 0;
+        } else {
+            openSites += 1;
         }
         grid[row][col] = true;
-        openSites += 1;
         if (row == 0) {
             tracker.union(row * grid.length + col, grid.length * grid.length);
             gridFull.union(row * grid.length + col, grid.length * grid.length);
