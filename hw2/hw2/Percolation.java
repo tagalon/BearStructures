@@ -37,7 +37,7 @@ public class Percolation {
 
     public void open(int row, int col) {
         validate(row, col);
-        if (indexedGrid()) {
+        if (indexedGrid(row, col)) {
             openSites += 0;
         } else {
             openSites += 1;
