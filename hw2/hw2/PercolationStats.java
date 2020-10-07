@@ -24,10 +24,10 @@ public class PercolationStats {
     public double stddev() {
         return StdStats.stddev(sampleTestArray);
     }
-    public double confidenceLow () {
+    public double confidenceLow() {
         return mean() - 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
     }
-    public double confidenceHigh () {
+    public double confidenceHigh() {
         return mean() + 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
     }
 

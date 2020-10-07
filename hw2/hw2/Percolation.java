@@ -9,7 +9,7 @@ public class Percolation {
     private WeightedQuickUnionUF gridFull;
 
     public Percolation(int N) {
-        if (N <= 0)  {
+        if (N <= 0) {
             throw new IllegalArgumentException(
                     "N cannot be 0 or less than 0 itself"
             );
@@ -27,7 +27,7 @@ public class Percolation {
 
     private void validate(int v1, int v2) {
         if (v1 < 0 || v1 >= grid.length || v2 < 0 || v2 >= grid.length) {
-            throw new IndexOutOfBoundsException(v1 + ", " + v2 + " is not a valid index inside the grid");
+            throw new IndexOutOfBoundsException(v1 + ", " + v2 + " is not a valid index");
         }
     }
 
@@ -37,6 +37,9 @@ public class Percolation {
 
     public void open(int row, int col) {
         validate(row, col);
+        if (indexedGrid(row, col)) {
+            return;
+        }
         grid[row][col] = true;
         openSites += 1;
         if (row == 0) {
@@ -81,7 +84,7 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col) {
-        if (isOpen(row, col) && gridFull.connected(row * grid.length + col, grid.length * grid.length)) {
+        if (isOpen(row, col) && gridFull.connected(row * grid.length + col, grid.length ^ 2)) {
             return true;
         }
         return false;
@@ -93,9 +96,9 @@ public class Percolation {
         }
         return false;
     }
-    public int numberOfOpenSites () {
+    public int numberOfOpenSites() {
         return openSites;
     }
 
-    public static void main(String[] args) {}
+    public static void main(String[] args) { }
 }
