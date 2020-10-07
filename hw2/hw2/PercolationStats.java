@@ -18,7 +18,6 @@ public class PercolationStats {
             }
             sampleTestArray[index] = testGrid.openSites / Math.pow(N, 2);
         }
-        percThreshold = mean();
     }
     public double mean() {
         return StdStats.mean(sampleTestArray);
@@ -27,10 +26,10 @@ public class PercolationStats {
         return StdStats.stddev(sampleTestArray);
     }
     public double confidenceLow () {
-        return percThreshold - 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
+        return mean() - 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
     }
     public double confidenceHigh () {
-        return percThreshold + 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
+        return mean() + 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
     }
 
 }
