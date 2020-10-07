@@ -27,10 +27,10 @@ public class PercolationStats {
         return StdStats.stddev(sampleTestArray);
     }
     public double confidenceLow () {
-        return percThreshold - .96 * stddev() / Math.sqrt(sampleTestArray.length);
+        return percThreshold - 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
     }
     public double confidenceHigh () {
-        return percThreshold + .96 * stddev() / Math.sqrt(sampleTestArray.length);
+        return percThreshold + 1.96 * stddev() / Math.sqrt(sampleTestArray.length);
     }
 
 }
