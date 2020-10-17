@@ -18,8 +18,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private double loadFactor;
     private HashSet<K> keys;
 
-    public static final int DEFAULT_INIT_SIZE = 16;
-    public static final double DEFAULT_LOAD_FACTOR = 0.75;
+    private static final int DEFAULT_INIT_SIZE = 16;
+    private static final double DEFAULT_LOAD_FACTOR = 0.75;
 
     public MyHashMap() {
         buckets = (ArrayList<Node>[]) new ArrayList[DEFAULT_INIT_SIZE];
