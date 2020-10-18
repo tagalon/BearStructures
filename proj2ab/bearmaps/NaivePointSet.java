@@ -4,11 +4,13 @@ import java.util.List;
 public class NaivePointSet implements PointSet {
     private List<Point> pointList;
 
+    /* This is a constructor for NaivePointSet, which takes in a List<Point> points */
     public NaivePointSet(List<Point> points) {
         pointList = points;
     }
 
-    /* Searches for the nearest point by searching the arguments in constant runtime */
+    /* This method returns the nearest point by searching the arguments in constant runtime */
+    /* This method takes in two doubles as arguments: x and y */
     @Override
     public Point nearest(double x, double y) {
         double bestDistance = distance(pointList.get(0), new Point(x, y));
@@ -23,7 +25,8 @@ public class NaivePointSet implements PointSet {
         return pointList.get(bestIndex);
     }
 
-    /* Returns distance calculated from two Point arguments */
+    /* This method calculates and returns distance as a double */
+    /* This method takes two Point arguments */
     private double distance(Point p1, Point p2) {
         double x = p1.getX() - p2.getX();
         double y = p1.getY() - p2.getY();

@@ -12,7 +12,7 @@ public class KDTreeTest {
     private static Random randomNum = new Random();
 
     /* @source Joshua Hug */
-    /* Returns random generated point */
+    /* This method returns random generated point. */
     private static Point randomPoint() {
         double x = randomNum.nextDouble() * 10000 - 5000;
         double y = randomNum.nextDouble() * 10000 - 5000;
@@ -20,7 +20,7 @@ public class KDTreeTest {
     }
 
     /* @source Joshua Hug */
-    /* Returns list of random generated points */
+    /* This method returns list of n random generated points. */
     private static List<Point> randomPointsList(int n) {
         List<Point> pointsList = new ArrayList<>();
         for (int index = 0; index < n; index++) {
@@ -29,10 +29,10 @@ public class KDTreeTest {
         return pointsList;
     }
 
-    /* Tests Demo Slides Data */
+    /* This method tests the Project 2A demo slides data. */
     @Test
     public void testKDTree() {
-        Point p1 = new Point(2, 3); // constructs a Point with x = 1.1, y = 2.2
+        Point p1 = new Point(2, 3);
         Point p2 = new Point(1, 5);
         Point p3 = new Point(4, 2);
         Point p4 = new Point(4, 5);
@@ -47,22 +47,19 @@ public class KDTreeTest {
         System.out.println(nn);
     }
 
-    /* Tests 100,000 points and 20000 testQueries */
+    /* This method runs multiple tests on testRandomness using values from 1 to 100000. */
     @Test
     public void testRandomnessKDTree() {
-        List<Point> pointList = randomPointsList(1000000);
-        List<Point> testQueries = randomPointsList(20000);
-        KDTree nn = new KDTree(pointList);
-        NaivePointSet np = new NaivePointSet(pointList);
-        for (Point p : testQueries) {
-            Point kdtest = nn.nearest(p.getX(), p.getY());
-            Point nptest = np.nearest(p.getX(), p.getY());
-            assertEquals(kdtest, nptest);
-        }
+        testRandomness(100000, 20000);
+        testRandomness(10000, 30);
+        testRandomness(50000, 50000);
+        testRandomness(1000, 30000);
+        testRandomness(2, 1);
     }
 
     /* @source Joshua Hug */
-    /* Tests the randomness of the nearest function from KDTree & NPS, searching for edge cases */
+    /* The method tests randomness of the nearest function from KDTree & NPS */
+    /* This method takes in two int arguments: numPoints and numQueries */
     private void testRandomness(int numPoints, int numQueries) {
         List<Point> pointList = randomPointsList(numPoints);
         List<Point> testQueries = randomPointsList(numQueries);
@@ -75,7 +72,7 @@ public class KDTreeTest {
         }
     }
 
-    /* Tests for duplicate entries */
+    /* This method tests for duplicate entries. */
     @Test
     public void testDuplicates() {
         Point p1 = new Point(10, 11);

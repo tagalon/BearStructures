@@ -8,19 +8,22 @@ import edu.princeton.cs.algs4.Stopwatch;
 public class KDTree implements PointSet {
     private static Random randomNum = new Random();
 
-    /* Variable keeping track of unique points added */
+    /* The variable keeps track of unique points added */
     private int numCount;
 
+    /* The function getNumCount() returns numCount. */
     public int getNumCount() {
         return numCount;
     }
 
-    /* Private class storing node's information */
+    /* This is a private class storing node's information. */
     private class PointNode {
         PointNode left;
         PointNode right;
         Point pointNode;
         boolean depth;
+
+        /* This is a node constructor taking in Point p and boolean d (@param). */
         PointNode(Point p, boolean d) {
             pointNode = p;
             depth = d;
@@ -28,7 +31,7 @@ public class KDTree implements PointSet {
     }
     PointNode head;
 
-    /* KDTree Constructor which builds our tree */
+    /* KDTree Constructor which builds our tree, taking in @param List<point> points. */
     public KDTree(List<Point> points) {
         numCount = 0;
         for (int index = 0; index < points.size(); index++) {
@@ -37,12 +40,12 @@ public class KDTree implements PointSet {
         }
     }
 
-    /* Method for inserting a point into the tree */
+    /* This is a method for inserting a point into the tree. */
     private void insert(Point p) {
         head = insert(head, p, true);
     }
 
-    /* Recursive helper method storing point in the right place */
+    /* Recursive helper method storing point in the right place. */
     private PointNode insert(PointNode h, Point p, boolean d) {
         if (h == null) {
             return new PointNode(p, d);
@@ -61,7 +64,9 @@ public class KDTree implements PointSet {
         return h;
     }
 
-    /* Helper method for calculating distance */
+    /* This is a helper method for calculating distance. */
+    /* The method takes in parameters PointNode p and Point g. */
+    /* The method returns the distance as a double. */
     private double distance(PointNode p, Point g) {
         double x = p.pointNode.getX() - g.getX();
         double y = p.pointNode.getY() - g.getY();
@@ -69,14 +74,16 @@ public class KDTree implements PointSet {
         return distance;
     }
 
-    /* Finds the nearest point to inputted arguments */
+    /* This method takes in two double variables, x and y. */
+    /* This method returns the nearest point to inputted arguments. */
     @Override
     public Point nearest(double x, double y) {
         PointNode bestPoint = head;
         return nearestHelper(head, new Point(x, y), bestPoint).pointNode;
     }
 
-    /* Recursive helper method for finding the nearest point */
+    /* This is a recursive helper method for returning the nearest PointNode. */
+    /* This method takes in two PointNode variables, n and best, as well as Point goal. */
     private PointNode nearestHelper(PointNode n, Point goal, PointNode best) {
         PointNode goodSide;
         PointNode badSide;
@@ -111,7 +118,7 @@ public class KDTree implements PointSet {
     }
 
     /* @source Joshua Hug */
-    /* Returns random generated point */
+    /* This method returns random generated point. */
     private static Point randomPoint() {
         double x = randomNum.nextDouble() * 10000 - 5000;
         double y = randomNum.nextDouble() * 10000 - 5000;
@@ -119,7 +126,7 @@ public class KDTree implements PointSet {
     }
 
     /* @source Joshua Hug */
-    /* Returns list of random generated points */
+    /* This method returns list of n random generated points. */
     private static List<Point> randomPointsList(int n) {
         List<Point> pointsList = new ArrayList<>();
         for (int index = 0; index < n; index++) {
@@ -128,7 +135,7 @@ public class KDTree implements PointSet {
         return pointsList;
     }
 
-    /* Tests how fast the KDTree Constructor is */
+    /* This method tests how fast the KDTree constructor is. */
     public static void kdTreeTimeEntries() {
         List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
@@ -143,7 +150,7 @@ public class KDTree implements PointSet {
         printTimingTable(nList, timesList, nList);
     }
 
-    /* Tests how fast nearest method is from NaivePointSet */
+    /* This method tests how fast the nearest method is from NaivePointSet. */
     private static void naiveNearest() {
         List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
@@ -164,7 +171,7 @@ public class KDTree implements PointSet {
         printTimingTable(nList, timesList, opsList);
     }
 
-    /* Tests how fast nearest method is from KDTree */
+    /* This method tests how fast the nearest method is from KDTree. */
     private static void kdTreeNearest() {
         List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
@@ -186,7 +193,9 @@ public class KDTree implements PointSet {
     }
 
     /* @source Lab 5 */
-    /* Constructs a timing table for the efficiency of a method */
+    /* This method prints a timing table for the efficiency of a method. */
+    /* This method takes in three lists, telling the number of calls (nList),
+     * time for each number of calls (t), and the number of operations (op). */
     private static void printTimingTable(List<Integer> nList, List<Double> t, List<Integer> op) {
         System.out.printf("%12s %12s %12s %12s\n", "N", "time (s)", "# ops", "microsec/op");
         System.out.printf("---------------------------------------------------------\n");
@@ -199,7 +208,9 @@ public class KDTree implements PointSet {
         }
     }
 
-    /* Tests the efficiency of KDTree Constructor and nearest methods */
+    /* This is the main method, which prints the timing tables for
+    * the KDTree constructor, KDTree's nearest method, and
+    *  NaivePointSet's nearest method.*/
     public static void main(String[] args) {
         kdTreeTimeEntries();
         naiveNearest();
