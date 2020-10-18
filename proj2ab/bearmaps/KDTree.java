@@ -5,29 +5,35 @@ import java.util.List;
 import java.util.Random;
 import edu.princeton.cs.algs4.Stopwatch;
 
-public class KDTree implements PointSet{
+import static org.junit.Assert.assertEquals;
+
+public class KDTree implements PointSet {
+    private static Random randomNum = new Random();
+
+    /* Variable keeping track of unique points added */
     private int numCount;
+
+    public int getNumCount() {
+        return numCount;
+    }
+
     /* Private class storing node's information */
     private class PointNode {
         PointNode left;
         PointNode right;
         Point pointNode;
         boolean depth;
-        public PointNode(Point p, boolean d){
+        public PointNode(Point p, boolean d) {
             pointNode = p;
             depth = d;
         }
     }
     PointNode head;
 
-    public int getNumCount() {
-        return numCount;
-    }
-
     /* KDTree Constructor which builds our tree */
     public KDTree(List<Point> points) {
         numCount = 0;
-        for (int index = 0; index < points.size(); index ++) {
+        for (int index = 0; index < points.size(); index++) {
             insert(points.get(index));
             numCount += 1;
         }
@@ -52,7 +58,7 @@ public class KDTree implements PointSet{
         } else if (!(d) && p.getY() >= h.pointNode.getY()) {
             h.right = insert(h.right, p, !d);
         } else if (!(d) && p.getY() < h.pointNode.getY()) {
-            h.left = insert(h.left, p,!d);
+            h.left = insert(h.left, p, !d);
         }
         return h;
     }
@@ -97,17 +103,32 @@ public class KDTree implements PointSet{
             badSide = n.left;
         }
         best = nearestHelper(goodSide, goal, best);
-        if (badSide == null) {
-            return best;
-        }
-        PointNode badY = new PointNode(new Point(goal.getX(), badSide.pointNode.getY()), false);
-        PointNode badX = new PointNode(new Point(badSide.pointNode.getX(), goal.getY()), true);
-        if (!n.depth && distance(badY, goal) < distance(best, goal)) {
+        PointNode badX = new PointNode(new Point(n.pointNode.getX(), goal.getY()), false);
+        PointNode badY = new PointNode(new Point(goal.getX(), n.pointNode.getY()), true);
+        if (distance(badY, goal) < distance(best, goal)) {
             best = nearestHelper(badSide, goal, best);
-        } else if (n.depth && distance(badX, goal) < distance(best, goal)) {
+        } else if (distance(badX, goal) < distance(best, goal)) {
             best = nearestHelper(badSide, goal, best);
         }
         return best;
+    }
+
+    /* @source Joshua Hug */
+    /* Returns random generated point */
+    private static Point randomPoint() {
+        double x = randomNum.nextDouble() * 10000 - 5000;
+        double y = randomNum.nextDouble() * 10000 - 5000;
+        return new Point(x, y);
+    }
+
+    /* @source Joshua Hug */
+    /* Returns list of random generated points */
+    private static List<Point> randomPointsList(int n) {
+        List<Point> pointsList = new ArrayList<>();
+        for (int index = 0; index < n; index++) {
+            pointsList.add(randomPoint());
+        }
+        return pointsList;
     }
 
     /* Tests how fast the KDTree Constructor is */
@@ -115,12 +136,7 @@ public class KDTree implements PointSet{
         List<Integer> NList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
         for (int n= 31250; n < 2000001; n *= 2) {
-            List<Point> pointList = new ArrayList<Point>();
-            Random randomNumGen = new Random();
-            for (int index = 0; index < n; index ++);
-                double x = randomNumGen.nextDouble() * 10 - 5;
-                double y = randomNumGen.nextDouble() * 10 - 5;
-                pointList.add(new Point(x, y));
+            List<Point> pointList = randomPointsList(n);
             Stopwatch sw = new Stopwatch();
             PointSet testTree = new KDTree(pointList);
             double timeS = sw.elapsedTime();
@@ -136,18 +152,12 @@ public class KDTree implements PointSet{
         List<Double> timesList = new ArrayList<>();
         List<Integer> opsList = new ArrayList<>();
         for (int n= 125; n < 1001; n *= 2) {
-            List<Point> pointList = new ArrayList<Point>();
-            Random randomNumGen = new Random();
-            for (int index = 0; index < n; index ++);
-                double x = randomNumGen.nextDouble() * 1000 - 500;
-                double y = randomNumGen.nextDouble() * 1000 - 500;
-                pointList.add(new Point(x, y));
+            List<Point> pointList = randomPointsList(n);
             NaivePointSet testSet = new NaivePointSet(pointList);
+            List<Point> testQueries = randomPointsList(1000000);
             Stopwatch sw = new Stopwatch();
-            for (int count = 0; count < 1000000; count ++) {
-                double testX = randomNumGen.nextDouble() * 10 - 5;
-                double testY = randomNumGen.nextDouble() * 10 - 5;
-                testSet.nearest(testX, testY);
+            for (Point p : testQueries) {
+                testSet.nearest(p.getX(), p.getY());
             }
             double timeS = sw.elapsedTime();
             timesList.add(timeS);
@@ -163,18 +173,12 @@ public class KDTree implements PointSet{
         List<Double> timesList = new ArrayList<>();
         List<Integer> opsList = new ArrayList<>();
         for (int n= 31250; n < 1000001; n *= 2) {
-            List<Point> pointList = new ArrayList<Point>();
-            Random randomNumGen = new Random();
-            for (int index = 0; index < n; index ++);
-                double x = randomNumGen.nextDouble() * 1000 - 500;
-                double y = randomNumGen.nextDouble() * 1000 - 500;
-                pointList.add(new Point(x, y));
+            List<Point> pointList = randomPointsList(n);
             KDTree testSet = new KDTree(pointList);
+            List<Point> testQueries = randomPointsList(1000000);
             Stopwatch sw = new Stopwatch();
-            for (int count = 0; count < 1000000; count ++) {
-                double testX = randomNumGen.nextDouble() * 10 - 5;
-                double testY = randomNumGen.nextDouble() * 10 - 5;
-                testSet.nearest(testX, testY);
+            for (Point p : testQueries) {
+                testSet.nearest(p.getX(), p.getY());
             }
             double timeS = sw.elapsedTime();
             timesList.add(timeS);
@@ -185,6 +189,7 @@ public class KDTree implements PointSet{
     }
 
     /* @source Lab 5 */
+    /* Constructs a timing table for the efficiency of a method */
     private static void printTimingTable(List<Integer> Ns, List<Double> times, List<Integer> opCounts) {
         System.out.printf("%12s %12s %12s %12s\n", "N", "time (s)", "# ops", "microsec/op");
         System.out.printf("------------------------------------------------------------\n");
