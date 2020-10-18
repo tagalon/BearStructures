@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Random;
 import edu.princeton.cs.algs4.Stopwatch;
 
-import static org.junit.Assert.assertEquals;
-
 public class KDTree implements PointSet {
     private static Random randomNum = new Random();
 
@@ -23,7 +21,7 @@ public class KDTree implements PointSet {
         PointNode right;
         Point pointNode;
         boolean depth;
-        public PointNode(Point p, boolean d) {
+        PointNode(Point p, boolean d) {
             pointNode = p;
             depth = d;
         }
@@ -97,8 +95,7 @@ public class KDTree implements PointSet {
         } else if (!n.depth && goal.getY() >= n.pointNode.getY()) {
             goodSide = n.right;
             badSide = n.left;
-        }
-        else {
+        } else {
             goodSide = n.right;
             badSide = n.left;
         }
@@ -132,26 +129,26 @@ public class KDTree implements PointSet {
     }
 
     /* Tests how fast the KDTree Constructor is */
-    public static void KDtimeEntries() {
-        List<Integer> NList = new ArrayList<>();
+    public static void kdTreeTimeEntries() {
+        List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
-        for (int n= 31250; n < 2000001; n *= 2) {
+        for (int n = 31250; n < 2000001; n *= 2) {
             List<Point> pointList = randomPointsList(n);
             Stopwatch sw = new Stopwatch();
             PointSet testTree = new KDTree(pointList);
             double timeS = sw.elapsedTime();
             timesList.add(timeS);
-            NList.add(n);
+            nList.add(n);
         }
-        printTimingTable(NList, timesList, NList);
+        printTimingTable(nList, timesList, nList);
     }
 
     /* Tests how fast nearest method is from NaivePointSet */
-    private static void NaiveNearest() {
-        List<Integer> NList = new ArrayList<>();
+    private static void naiveNearest() {
+        List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
         List<Integer> opsList = new ArrayList<>();
-        for (int n= 125; n < 1001; n *= 2) {
+        for (int n = 125; n < 1001; n *= 2) {
             List<Point> pointList = randomPointsList(n);
             NaivePointSet testSet = new NaivePointSet(pointList);
             List<Point> testQueries = randomPointsList(1000000);
@@ -161,18 +158,18 @@ public class KDTree implements PointSet {
             }
             double timeS = sw.elapsedTime();
             timesList.add(timeS);
-            NList.add(n);
+            nList.add(n);
             opsList.add(1000000);
         }
-        printTimingTable(NList, timesList, opsList);
+        printTimingTable(nList, timesList, opsList);
     }
 
     /* Tests how fast nearest method is from KDTree */
-    private static void KDTreeNearest() {
-        List<Integer> NList = new ArrayList<>();
+    private static void kdTreeNearest() {
+        List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
         List<Integer> opsList = new ArrayList<>();
-        for (int n= 31250; n < 1000001; n *= 2) {
+        for (int n = 31250; n < 1000001; n *= 2) {
             List<Point> pointList = randomPointsList(n);
             KDTree testSet = new KDTree(pointList);
             List<Point> testQueries = randomPointsList(1000000);
@@ -182,19 +179,19 @@ public class KDTree implements PointSet {
             }
             double timeS = sw.elapsedTime();
             timesList.add(timeS);
-            NList.add(n);
+            nList.add(n);
             opsList.add(1000000);
         }
-        printTimingTable(NList, timesList, opsList);
+        printTimingTable(nList, timesList, opsList);
     }
 
     /* @source Lab 5 */
     /* Constructs a timing table for the efficiency of a method */
-    private static void printTimingTable(List<Integer> Ns, List<Double> times, List<Integer> opCounts) {
+    private static void printTimingTable(List<Integer> nList, List<Double> times, List<Integer> opCounts) {
         System.out.printf("%12s %12s %12s %12s\n", "N", "time (s)", "# ops", "microsec/op");
-        System.out.printf("------------------------------------------------------------\n");
-        for (int i = 0; i < Ns.size(); i += 1) {
-            int N = Ns.get(i);
+        System.out.printf("---------------------------------------------------------\n");
+        for (int i = 0; i < nList.size(); i += 1) {
+            int N = nList.get(i);
             double time = times.get(i);
             int opCount = opCounts.get(i);
             double timePerOp = time / opCount * 1e6;
@@ -204,8 +201,8 @@ public class KDTree implements PointSet {
 
     /* Tests the efficieny of KDTree Constructor and nearest methods */
     public static void main(String[] args) {
-        KDtimeEntries();
-        NaiveNearest();
-        KDTreeNearest();
+        kdTreeTimeEntries();
+        naiveNearest();
+        kdTreeNearest();
     }
 }
