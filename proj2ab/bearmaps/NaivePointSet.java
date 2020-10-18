@@ -13,7 +13,7 @@ public class NaivePointSet implements PointSet {
     public Point nearest(double x, double y) {
         double bestDistance = distance(pointList.get(0), new Point(x, y));
         int bestIndex = 0;
-        for (int index = 1; index < pointList.size(); index ++) {
+        for (int index = 1; index < pointList.size(); index++) {
             double testDistance = distance(pointList.get(index), new Point(x, y));
             if (testDistance <= bestDistance) {
                 bestIndex = index;

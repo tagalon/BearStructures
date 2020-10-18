@@ -73,7 +73,7 @@ public class KDTree implements PointSet {
     @Override
     public Point nearest(double x, double y) {
         PointNode bestPoint = head;
-        return nearestHelper(head, new Point (x, y), bestPoint).pointNode;
+        return nearestHelper(head, new Point(x, y), bestPoint).pointNode;
     }
 
     /* Recursive helper method for finding the nearest point */
@@ -187,19 +187,19 @@ public class KDTree implements PointSet {
 
     /* @source Lab 5 */
     /* Constructs a timing table for the efficiency of a method */
-    private static void printTimingTable(List<Integer> nList, List<Double> times, List<Integer> opCounts) {
+    private static void printTimingTable(List<Integer> nList, List<Double> t, List<Integer> op) {
         System.out.printf("%12s %12s %12s %12s\n", "N", "time (s)", "# ops", "microsec/op");
         System.out.printf("---------------------------------------------------------\n");
         for (int i = 0; i < nList.size(); i += 1) {
             int N = nList.get(i);
-            double time = times.get(i);
-            int opCount = opCounts.get(i);
+            double time = t.get(i);
+            int opCount = op.get(i);
             double timePerOp = time / opCount * 1e6;
             System.out.printf("%12d %12.2f %12d %12.2f\n", N, time, opCount, timePerOp);
         }
     }
 
-    /* Tests the efficieny of KDTree Constructor and nearest methods */
+    /* Tests the efficiency of KDTree Constructor and nearest methods */
     public static void main(String[] args) {
         kdTreeTimeEntries();
         naiveNearest();
