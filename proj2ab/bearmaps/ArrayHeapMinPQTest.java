@@ -35,7 +35,7 @@ public class ArrayHeapMinPQTest {
     * ArrayMinHeapPQ */
     @Test
     public void testFunctionality() {
-        ArrayHeapMinPQ test = new ArrayHeapMinPQ(8);
+        ArrayHeapMinPQ test = new ArrayHeapMinPQ();
         test.add(1, 1.00);
         test.add(3, 3.00);
         test.add(2, 2.00);
@@ -55,7 +55,7 @@ public class ArrayHeapMinPQTest {
     public void testRandomnessCorrectness() {
         for (int n = 10; n < 10000; n*=2) {
             List<double[]> testArgList = randomArgList(n);
-            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n);
+            ArrayHeapMinPQ test = new ArrayHeapMinPQ();
             NaiveMinPQ<Double> nmtest = new NaiveMinPQ<>();
             for (double[] arg : testArgList) {
                 test.add(arg[0], arg[1]);
@@ -80,7 +80,7 @@ public class ArrayHeapMinPQTest {
         for (int n = 10; n < 10000; n*=2) {
             List<double[]> testArgList = randomArgList(n);
             List<double[]> testArgList2 = randomArgList(n);
-            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n);
+            ArrayHeapMinPQ test = new ArrayHeapMinPQ();
             NaiveMinPQ<Double> nmtest = new NaiveMinPQ<>();
             for (double[] arg : testArgList) {
                 test.add(arg[0], arg[1]);

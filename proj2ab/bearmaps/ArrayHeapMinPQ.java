@@ -20,16 +20,9 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     /* It's assigned value is the index and priority queue itself. */
     private HashMap<T, Integer> tracker = new HashMap<>();
 
-
+    /* This is my constructor which declares the ArrayHeapMinPQ as an object */
     public ArrayHeapMinPQ() {
         items = new ArrayHeapMinPQ.Node[16];
-        items[0] = ((new Node(null, -1.01)));
-        size = 0;
-    }
-    /* This is my constructor which takes in capacity that determines the array size. */
-    public ArrayHeapMinPQ(int capacity) {
-        assert capacity > 0;
-        items = new ArrayHeapMinPQ.Node[capacity];
         items[0] = ((new Node(null, -1.01)));
         size = 0;
     }
@@ -232,7 +225,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         List<Double> timesList = new ArrayList<>();
         for (int n = 31250; n < 2000001; n *= 2) {
             List<double[]> testArgList = randomArgList(n);
-            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n);
+            ArrayHeapMinPQ test = new ArrayHeapMinPQ();
             Stopwatch sw = new Stopwatch();
             for (double[] arg : testArgList) {
                 test.add(arg[0], arg[1]);
@@ -250,7 +243,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         List<Double> timesList = new ArrayList<>();
         for (int n = 31250; n < 2000001; n *= 2) {
             List<double[]> testArgList = randomArgList(n * 2);
-            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n * 2);
+            ArrayHeapMinPQ test = new ArrayHeapMinPQ();
             for (double[] arg : testArgList) {
                 test.add(arg[0], arg[1]);
             }
@@ -271,7 +264,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         List<Double> timesList = new ArrayList<>();
         for (int n = 31250; n < 2000001; n *= 2) {
             List<double[]> testArgList = randomArgList(n * 2);
-            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n * 2);
+            ArrayHeapMinPQ test = new ArrayHeapMinPQ();
             for (double[] arg : testArgList) {
                 test.add(arg[0], arg[1]);
             }
@@ -284,11 +277,5 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             nList.add(n);
         }
         printTimingTable(nList, timesList, nList);
-    }
-
-    public static void main(String[] args) {
-        arrayHeapAddEntries();
-        arrayHeapRemoveSmallest();
-        arrayHeapChangePriority();
     }
 }
