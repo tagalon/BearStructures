@@ -182,7 +182,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             sink(index);
         } else if (leftChild(index) > size || rightChild(index) > size) {
             if (items[index].priority > items[parent(index)].priority) {
-                sink(index);
+                swim(index);
         } else {
                 Node parent = items[parent(tracker.get(item))];
                 Node child = items[tracker.get(item)];

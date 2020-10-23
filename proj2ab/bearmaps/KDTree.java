@@ -210,7 +210,7 @@ public class KDTree implements PointSet {
 
     /* This is the main method, which prints the timing tables for
      * the KDTree constructor, KDTree's nearest method, and
-     *  NaivePointSet's nearest method.*/
+     *  NaivePointSet's nearest method */
     public static void main(String[] args) {
         kdTreeTimeEntries();
         naiveNearest();

@@ -110,5 +110,6 @@ public class NaiveMinPQ<T> implements ExtrinsicMinPQ<T> {
         public int hashCode() {
             return item.hashCode();
         }
+
     }
 }
