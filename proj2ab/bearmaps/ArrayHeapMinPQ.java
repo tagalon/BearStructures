@@ -12,7 +12,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
             priority = p;
         }
     }
-    public Node[] items;
+    private Node[] items;
     private int size;
     private static Random randomNum = new Random();
 
@@ -20,9 +20,15 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     /* It's assigned value is the index and priority queue itself. */
     private HashMap<T, Integer> tracker = new HashMap<>();
 
+
+    public ArrayHeapMinPQ() {
+        items = new ArrayHeapMinPQ.Node[16];
+        items[0] = ((new Node(null, -1.01)));
+        size = 0;
+    }
     /* This is my constructor which takes in capacity that determines the array size. */
     public ArrayHeapMinPQ(int capacity) {
-        assert capacity >= 4;
+        assert capacity > 0;
         items = new ArrayHeapMinPQ.Node[capacity];
         items[0] = ((new Node(null, -1.01)));
         size = 0;
@@ -59,7 +65,6 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
 
     /* This helper function reassigns an array with int capacity. */
     private void resize(int capacity) {
-        assert capacity > size;
         Node[] temp = new ArrayHeapMinPQ.Node[capacity];
         for (int i = 1; i <= size; i++) {
             temp[i] = items[i];
@@ -82,7 +87,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     /* This function compares object's priority values at their given indices
     * and returns a boolean value based on which is bigger. */
     private boolean greater(int k1, int k2) {
-        if (items[k1] == null || items[k2] == null ){
+        if (items[k1] == null || items[k2] == null) {
             return false;
         }
         return compare(items[k1].priority, items[k2].priority) > 0;
@@ -107,12 +112,10 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         }
         while (2 * k <= size) {
             int j = 2 * k;
-            if (items[j + 1] == null && greater(k, j)) {
-                j += 0;
-            } else if (j < size && greater(j, j + 1)) {
+            if (j < size && greater(j, j + 1)) {
                 j += 1;
             }
-            if(!greater(k, j)) {
+            if (!greater(k, j)) {
                 break;
             }
             swap(k, j);
@@ -126,7 +129,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     public void add(T item, double priority) {
         //use hashing to
         if (tracker.containsKey(item)) {
-            throw new IllegalArgumentException("You have already added "+ item +" in PQ");
+            throw new IllegalArgumentException("You have already added " + item + " in PQ");
         }
         if (size == items.length - 1) {
             resize(size * 2);
@@ -163,6 +166,9 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     * with the other items' priority values. */
     @Override
     public T removeSmallest() {
+        if (((double) size) / items.length < .33) {
+            resize(items.length / 2);
+        }
         Node temp = items[1];
         swap(1, size);
         tracker.remove(items[size].item);
@@ -176,23 +182,13 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     * and restructures it in respect to the other items' priority values. */
     @Override
     public void changePriority(T item, double priority) {
-        items[tracker.get(item)] = new Node(item, priority);
-        int index = tracker.get(item);
-        if (index == 1 && (greater(index, leftChild(index)) || greater(index, rightChild(index)))) {
-            sink(index);
-        } else if (leftChild(index) > size || rightChild(index) > size) {
-            if (items[index].priority > items[parent(index)].priority) {
-                swim(index);
-        } else {
-                Node parent = items[parent(tracker.get(item))];
-                Node child = items[tracker.get(item)];
-                if (parent.priority < child.priority) {
-                    swim(tracker.get(item));
-                } else {
-                    sink(tracker.get(item));
-                }
-            }
+        if (!contains(item)) {
+            return;
         }
+        int index = tracker.get(item);
+        items[index] = new Node(item, priority);
+        sink(index);
+        swim(index);
     }
 
     /* This method returns a random double[] array for T and priority. */
@@ -231,7 +227,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     /* This method tests how fast the add method is from ArrayHeapMinPQ. */
-    public static void ArrayHeapAddEntries() {
+    private static void arrayHeapAddEntries() {
         List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
         for (int n = 31250; n < 2000001; n *= 2) {
@@ -249,7 +245,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     /* This method tests how fast the removeSmallest method is from ArrayHeapMinPQ. */
-    public static void ArrayHeapRemoveSmallest() {
+    private static void arrayHeapRemoveSmallest() {
         List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
         for (int n = 31250; n < 2000001; n *= 2) {
@@ -270,7 +266,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     /* This method tests how fast the changePriority method is from ArrayHeapMinPQ. */
-    public static void ArrayHeapChangePriority() {
+    private static void arrayHeapChangePriority() {
         List<Integer> nList = new ArrayList<>();
         List<Double> timesList = new ArrayList<>();
         for (int n = 31250; n < 2000001; n *= 2) {
@@ -291,8 +287,8 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     }
 
     public static void main(String[] args) {
-        ArrayHeapAddEntries();
-        ArrayHeapRemoveSmallest();
-        ArrayHeapChangePriority();
+        arrayHeapAddEntries();
+        arrayHeapRemoveSmallest();
+        arrayHeapChangePriority();
     }
 }

@@ -31,39 +31,8 @@ public class ArrayHeapMinPQTest {
         return pointsList;
     }
 
-    /* @source Lab 5 */
-    /* This method prints a timing table for the efficiency of a method. */
-    /* This method takes in three lists, telling the number of calls (nList),
-     * time for each number of calls (t), and the number of operations (op). */
-    private static void printTimingTable(List<Integer> nList, List<Double> t, List<Integer> op) {
-        System.out.printf("%12s %12s %12s %12s\n", "N", "time (s)", "# ops", "microsec/op");
-        System.out.printf("---------------------------------------------------------\n");
-        for (int i = 0; i < nList.size(); i += 1) {
-            int N = nList.get(i);
-            double time = t.get(i);
-            int opCount = op.get(i);
-            double timePerOp = time / opCount * 1e6;
-            System.out.printf("%12d %12.2f %12d %12.2f\n", N, time, opCount, timePerOp);
-        }
-    }
-
-    public static void kdTreeTimeEntries() {
-        List<Integer> nList = new ArrayList<>();
-        List<Double> timesList = new ArrayList<>();
-        for (int n = 31250; n < 2000001; n *= 2) {
-            List<double[]> testArgList = randomArgList(n);
-            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n);
-            Stopwatch sw = new Stopwatch();
-            for (double[] arg : testArgList) {
-                test.add(arg[0], arg[1]);
-            }
-            double timeS = sw.elapsedTime();
-            timesList.add(timeS);
-            nList.add(n);
-        }
-        printTimingTable(nList, timesList, nList);
-    }
-
+    /* This function tests my personal implementation and the functionality of
+    * ArrayMinHeapPQ */
     @Test
     public void testFunctionality() {
         ArrayHeapMinPQ test = new ArrayHeapMinPQ(8);
@@ -76,7 +45,60 @@ public class ArrayHeapMinPQTest {
         test.add(6, 1.00);
         test.removeSmallest();
         test.changePriority(2, 3);
-        assertEquals(test.removeSmallest(), 1);
+        assertEquals(test.removeSmallest(), 6);
         test.removeSmallest();
+    }
+
+    /* This function tests implementation of add, changePriority, and removeSmallest
+     *  in sequential order. */
+    @Test
+    public void testRandomnessCorrectness() {
+        for (int n = 10; n < 10000; n*=2) {
+            List<double[]> testArgList = randomArgList(n);
+            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n);
+            NaiveMinPQ<Double> nmtest = new NaiveMinPQ<>();
+            for (double[] arg : testArgList) {
+                test.add(arg[0], arg[1]);
+                nmtest.add(arg[0], arg[1]);
+            }
+            for (int index = 1; index < n; index *= 2 + 1) {
+                double[] args = testArgList.get(index);
+                test.changePriority(args[0], -args[1]);
+                nmtest.changePriority(args[0], -args[1]);
+            }
+            for (int index = 0; index < n - 5; index++) {
+                assertEquals(test.removeSmallest(), nmtest.removeSmallest());
+                assertEquals(test.size(), nmtest.size());
+            }
+        }
+    }
+
+    /* This function tests implementation of add, changePriority, add, and removeSmallest
+     *  in sequential order. */
+    @Test
+    public void testRandomnessCorrectnessV2() {
+        for (int n = 10; n < 10000; n*=2) {
+            List<double[]> testArgList = randomArgList(n);
+            List<double[]> testArgList2 = randomArgList(n);
+            ArrayHeapMinPQ test = new ArrayHeapMinPQ(n);
+            NaiveMinPQ<Double> nmtest = new NaiveMinPQ<>();
+            for (double[] arg : testArgList) {
+                test.add(arg[0], arg[1]);
+                nmtest.add(arg[0], arg[1]);
+            }
+            for (int index = 1; index < n; index *= 2 + 1) {
+                double[] args = testArgList.get(index);
+                test.changePriority(args[0], -args[1]);
+                nmtest.changePriority(args[0], -args[1]);
+            }
+            for (double[] arg : testArgList2) {
+                test.add(arg[0], arg[1]);
+                nmtest.add(arg[0], arg[1]);
+            }
+            for (int index = 0; index < n - 5; index++) {
+                assertEquals(test.removeSmallest(), nmtest.removeSmallest());
+                assertEquals(test.size(), nmtest.size());
+            }
+        }
     }
 }

@@ -44,11 +44,11 @@ public class NaivePointSet implements PointSet {
         return bestPoint;
     }
 
-            /* This method calculates and returns distance as a double */
-            /* This method takes two Point arguments */
-            private double distance(Point p1, Point p2) {
-                double x = p1.getX() - p2.getX();
-                double y = p1.getY() - p2.getY();
-                return Math.sqrt(x * x + y * y);
-            }
+    /* This method calculates and returns distance as a double */
+    /* This method takes two Point arguments */
+    private double distance(Point p1, Point p2) {
+        double x = p1.getX() - p2.getX();
+        double y = p1.getY() - p2.getY();
+        return Math.sqrt(x * x + y * y);
+    }
 }
