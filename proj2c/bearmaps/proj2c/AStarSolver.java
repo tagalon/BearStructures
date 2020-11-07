@@ -63,6 +63,8 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 break;
             } else if (sw.elapsedTime() >= timeout) {
                 outcome = SolverOutcome.UNSOLVABLE;
+                solution = new ArrayList<>();
+                solutionWeight = 0;
             }
         }
         // First, I'm gonna be taking the previous point's priority and adding it to the point, I'm adding upon, as well as the heuristic estimate
