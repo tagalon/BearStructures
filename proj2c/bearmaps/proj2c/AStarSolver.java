@@ -1,5 +1,4 @@
 package bearmaps.proj2c;
-import bearmaps.proj2c.lectureexample.WeightedDirectedGraph;
 import edu.princeton.cs.algs4.Stopwatch;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -55,7 +54,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             }
             if (removed.equals(end)) {
                 solutionList(edgeTo, end);
-                solution.add(0, start);
                 solution.add(solution.size(), end);
                 solutionWeight = distTo.get(removed);
                 outcome = SolverOutcome.SOLVED;
@@ -67,8 +65,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 solutionWeight = 0;
             }
         }
-        // First, I'm gonna be taking the previous point's priority and adding it to the point, I'm adding upon, as well as the heuristic estimate
-        // for that point to the goal itself
     }
     private void nullChecker(Vertex v) {
         if (!distTo.containsKey(v)) {
@@ -79,14 +75,13 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private void solutionList(HashMap<Vertex, Vertex> distTo, Vertex goal) {
         List<Vertex> reverse = new ArrayList<>();
         while (distTo.get(goal) != s) {
-            solution.add(distTo.get(goal));
+            reverse.add(distTo.get(goal));
             goal = distTo.get(goal);
         }
-        while (solution.size() != 1) {
-            reverse.add(solution.get(solution.size() - 1));
-            solution.remove(solution.size() - 1);
+        while (reverse.size() != 0) {
+            solution.add(reverse.get(reverse.size() - 1));
+            reverse.remove(reverse.size() - 1);
         }
-        solution = reverse;
     }
 
     public SolverOutcome outcome() {
