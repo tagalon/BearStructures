@@ -7,22 +7,24 @@ import java.util.List;
 public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private HashMap<Vertex, Double> distTo;
     private DoubleMapPQ<Vertex> sPQ;
-    private AStarGraph<Vertex> i;
     private SolverOutcome outcome;
     private double solutionWeight;
     private List<Vertex> solution;
     private double timeSpent;
     private int dequeued;
-    private ArrayList<Vertex> edgeTo;
+    private Vertex s;
+    private HashMap<Vertex, Vertex> edgeTo;
 
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
-        i = input;
+        s = start;
+        solution = new ArrayList<>();
+        solution.add(start);
         distTo = new HashMap<>();
         sPQ = new DoubleMapPQ<>();
-        edgeTo = new ArrayList<>();
-        sPQ.add(start, 0);
+        edgeTo = new HashMap<>();
+        sPQ.add(start, input.estimatedDistanceToGoal(start, end));
         distTo.put(start, 0.0);
-        edgeTo.add(null);
+        edgeTo.put(start, null);
         dequeued = 0;
         //Some while loop that runs until PQ is empty, run the for loop inside
         //Take the smallest thing off the PQ
@@ -32,56 +34,37 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         Stopwatch sw = new Stopwatch();
         while (sPQ.size() != 0) {
             Vertex removed = sPQ.removeSmallest();
-            List<WeightedEdge<Vertex>> neighborEdges = input.neighbors(removed);
             dequeued += 1;
+            List<WeightedEdge<Vertex>> neighborEdges = input.neighbors(removed);
             for (WeightedEdge<Vertex> n : neighborEdges) {
                 Vertex v = n.from();
                 Vertex t = n.to();
                 double w = n.weight();
                 nullChecker(t);
                 if (distTo.get(v) + w < distTo.get(t)) {
-                    hashPut(t, distTo.get(v) + w);
-                    double sourceP = input.estimatedDistanceToGoal(start, t);
+                    distTo.put(t, distTo.get(v) + w);
+//                    double sourceP = input.estimatedDistanceToGoal(start, t);
                     double h = input.estimatedDistanceToGoal(t, end);
-                    edgeTo.add(t);
+                    edgeTo.put(t, v);
                     if (sPQ.contains(t)) {
-                        sPQ.changePriority(t, sourceP + h);
-                        hashPut(t, sourceP + h);
+                        sPQ.changePriority(t, distTo.get(t) + h);
                     } else if (!sPQ.contains(t)) {
-                        sPQ.add(t, sourceP + h);
-                        hashPut(t, sourceP + h);
+                        sPQ.add(t, distTo.get(t) + h);
                     }
                 }
-                if (removed.equals(end)) {
-//                    solution = List.of(start, end);
-//                    solutionWeight = n.weight();
-                    outcome = SolverOutcome.SOLVED;
-                    timeSpent = sw.elapsedTime();
-                    break;
-                } else if ( sw.elapsedTime() >= timeout) {
-                    outcome = SolverOutcome.UNSOLVABLE;
-                }
+            }
+            if (removed.equals(end)) {
+                solutionList(edgeTo, end);
+                solution.add(0, start);
+                solution.add(solution.size(), end);
+                solutionWeight = distTo.get(removed);
+                outcome = SolverOutcome.SOLVED;
+                timeSpent = sw.elapsedTime();
+                break;
+            } else if (sw.elapsedTime() >= timeout) {
+                outcome = SolverOutcome.UNSOLVABLE;
             }
         }
-
-//        List<WeightedEdge<Vertex>> neighborEdges = input.neighbors(start);
-//        for (WeightedEdge<Vertex> n: neighborEdges) {
-//            double sourceP = input.estimatedDistanceToGoal(start, n.from());
-//            double h = input.estimatedDistanceToGoal(n.from(), goal);
-//            sPQ.add(n.from(), sourceP + h);
-//            hashPut(n.from(), sourceP + h);
-//            if (n.from() == end) {
-//                break;
-//            }
-//        }
-//        while (true) {
-//            Vertex removed = sPQ.removeSmallest();
-//            relax(removed);
-//            if (removed == goal) {
-//                break;
-//            }
-//        }
-
         // First, I'm gonna be taking the previous point's priority and adding it to the point, I'm adding upon, as well as the heuristic estimate
         // for that point to the goal itself
     }
@@ -90,16 +73,18 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             distTo.put(v, Double.POSITIVE_INFINITY);
         }
     }
-    private void hashPut(Vertex k, Double v) {
-        if (distTo.containsKey(k)) {
-            if (distTo.get(k) > v) {
-                distTo.put(k, v);
-            } else {
-                return;
-            }
-        } else {
-            distTo.put(k, v);
+
+    private void solutionList(HashMap<Vertex, Vertex> distTo, Vertex goal) {
+        List<Vertex> reverse = new ArrayList<>();
+        while (distTo.get(goal) != s) {
+            solution.add(distTo.get(goal));
+            goal = distTo.get(goal);
         }
+        while (solution.size() != 1) {
+            reverse.add(solution.get(solution.size() - 1));
+            solution.remove(solution.size() - 1);
+        }
+        solution = reverse;
     }
 
     public SolverOutcome outcome() {
