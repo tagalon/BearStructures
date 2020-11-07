@@ -2,13 +2,14 @@ package bearmaps.proj2c;
 import edu.princeton.cs.algs4.Stopwatch;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private HashMap<Vertex, Double> distTo;
     private DoubleMapPQ<Vertex> sPQ;
     private SolverOutcome outcome;
     private double solutionWeight;
-    private List<Vertex> solution;
+    private LinkedList<Vertex> solution;
     private double timeSpent;
     private int dequeued;
     private Vertex s;
@@ -16,7 +17,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
         s = start;
-        solution = new ArrayList<>();
+        solution = new LinkedList<>();
         solution.add(start);
         distTo = new HashMap<>();
         sPQ = new DoubleMapPQ<>();
@@ -42,7 +43,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 nullChecker(t);
                 if (distTo.get(v) + w < distTo.get(t)) {
                     distTo.put(t, distTo.get(v) + w);
-//                    double sourceP = input.estimatedDistanceToGoal(start, t);
                     double h = input.estimatedDistanceToGoal(t, end);
                     edgeTo.put(t, v);
                     if (sPQ.contains(t)) {
@@ -54,14 +54,13 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             }
             if (removed.equals(end)) {
                 solutionList(edgeTo, end);
-                solution.add(solution.size(), end);
                 solutionWeight = distTo.get(removed);
                 outcome = SolverOutcome.SOLVED;
                 timeSpent = sw.elapsedTime();
                 break;
             } else if (sw.elapsedTime() >= timeout) {
                 outcome = SolverOutcome.UNSOLVABLE;
-                solution = new ArrayList<>();
+                solution = new LinkedList<>();
                 solutionWeight = 0;
             }
         }
@@ -73,15 +72,13 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     }
 
     private void solutionList(HashMap<Vertex, Vertex> distTo, Vertex goal) {
-        List<Vertex> reverse = new ArrayList<>();
         while (distTo.get(goal) != s) {
-            reverse.add(distTo.get(goal));
+            solution.addFirst(distTo.get(goal));
             goal = distTo.get(goal);
         }
-        while (reverse.size() != 0) {
-            solution.add(reverse.get(reverse.size() - 1));
-            reverse.remove(reverse.size() - 1);
-        }
+        solution.removeLast();
+        solution.push(s);
+        solution.add(solution.size(), goal);
     }
 
     public SolverOutcome outcome() {
