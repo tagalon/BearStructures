@@ -66,9 +66,9 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 solution = new LinkedList<>();
                 solutionWeight = 0;
             }
-        }
-        if (sPQ.size() == 0) {
-            outcome = SolverOutcome.UNSOLVABLE;
+            if (sPQ.size() == 0) {
+                outcome = SolverOutcome.UNSOLVABLE;
+            }
         }
     }
     private void nullChecker(Vertex v) {
