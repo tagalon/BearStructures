@@ -14,7 +14,8 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private Vertex s;
     private HashMap<Vertex, Vertex> edgeTo;
 
-    /* The constructor for solving the best short path from start to goal */
+    /* The constructor solves the best short path from start to goal under the timeout,
+    and if the timeout exceeds or the PQ is empty, a best short path doesn't exist. */
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
         s = start;
         solution = new LinkedList<>();
@@ -63,12 +64,18 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         }
     }
 
+    /* This function checks whether or not an item is in the
+    Hashmap distTo, and if it is not, input with infinite priority.
+     */
     private void nullChecker(Vertex v) {
         if (!distTo.containsKey(v)) {
             distTo.put(v, Double.POSITIVE_INFINITY);
         }
     }
 
+    /* This function creates the best short path in the order of vertexes,
+    and returns all these vertexes including start and end into a LinkedList.
+     */
     private void solutionList(HashMap h, Vertex goal) {
         Vertex e = goal;
         if (h.get(goal) == null && s.equals(goal)) {
@@ -83,18 +90,25 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         solution.addLast(e);
     }
 
+    /* This function returns whether a best short path has been found. */
     public SolverOutcome outcome() {
         return outcome;
     }
+    /* This function returns the best short path
+    as a list of vertices from start to end. */
     public List<Vertex> solution() {
         return solution;
     }
+    /* This function returns the cost of the best path as a double. */
     public double solutionWeight() {
         return solutionWeight;
     }
+
+    /* This function returns the number of states explored in the PQ. */
     public int numStatesExplored() {
         return dequeued;
     }
+    /* This function returns how long it took to find the solution in seconds. */
     public double explorationTime() {
         return timeSpent;
     }
