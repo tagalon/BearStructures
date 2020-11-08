@@ -18,7 +18,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
         s = start;
         solution = new LinkedList<>();
-        solution.add(start);
         distTo = new HashMap<>();
         sPQ = new DoubleMapPQ<>();
         edgeTo = new HashMap<>();
@@ -53,16 +52,23 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 }
             }
             if (removed.equals(end)) {
+//                while (!(edgeTo.get(end).equals(s))) {
+//                    solution.addFirst(edgeTo.get(end));
+//                    end = edgeTo.get(end);
+//                }
                 solutionList(edgeTo, end);
                 solutionWeight = distTo.get(removed);
                 outcome = SolverOutcome.SOLVED;
                 timeSpent = sw.elapsedTime();
                 break;
             } else if (sw.elapsedTime() >= timeout) {
-                outcome = SolverOutcome.UNSOLVABLE;
+                outcome = SolverOutcome.TIMEOUT;
                 solution = new LinkedList<>();
                 solutionWeight = 0;
             }
+        }
+        if (sPQ.size() == 0) {
+            outcome = SolverOutcome.UNSOLVABLE;
         }
     }
     private void nullChecker(Vertex v) {
@@ -71,14 +77,22 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         }
     }
 
-    private void solutionList(HashMap<Vertex, Vertex> distTo, Vertex goal) {
-        while (distTo.get(goal) != s) {
-            solution.addFirst(distTo.get(goal));
-            goal = distTo.get(goal);
+    private void solutionList(HashMap<Vertex, Vertex> edgeTo, Vertex goal) {
+        Vertex e = goal;
+//        if (!edgeTo.containsKey(goal)) {
+//            solution = new LinkedList<>();
+//            return;
+//        }
+        if (edgeTo.get(goal) == null && s.equals(goal)) {
+            solution.add(s);
+            return;
         }
-        solution.removeLast();
-        solution.push(s);
-        solution.add(solution.size(), goal);
+        while (edgeTo.containsKey(goal) && !edgeTo.get(goal).equals(s)) {
+            solution.addFirst(edgeTo.get(goal));
+            goal = edgeTo.get(goal);
+        }
+        solution.addFirst(s);
+        solution.addLast(e);
     }
 
     public SolverOutcome outcome() {
