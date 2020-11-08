@@ -57,9 +57,11 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 outcome = SolverOutcome.TIMEOUT;
                 solution = new LinkedList<>();
                 solutionWeight = 0;
+                break;
             }
             if (sPQ.size() == 0) {
                 outcome = SolverOutcome.UNSOLVABLE;
+                break;
             }
         }
     }
