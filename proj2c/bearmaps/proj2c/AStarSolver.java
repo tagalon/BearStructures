@@ -1,7 +1,6 @@
 package bearmaps.proj2c;
 import edu.princeton.cs.algs4.Stopwatch;
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
@@ -25,11 +24,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         distTo.put(start, 0.0);
         edgeTo.put(start, null);
         dequeued = 0;
-        //Some while loop that runs until PQ is empty, run the for loop inside
-        //Take the smallest thing off the PQ
-        //Iterator all the neighers of vertex v, and relax each neighbor
-        //Update the best distance for these neighbors ^
-        //Update priority
         Stopwatch sw = new Stopwatch();
         while (sPQ.size() != 0) {
             Vertex removed = sPQ.removeSmallest();
@@ -52,10 +46,6 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
                 }
             }
             if (removed.equals(end)) {
-//                while (!(edgeTo.get(end).equals(s))) {
-//                    solution.addFirst(edgeTo.get(end));
-//                    end = edgeTo.get(end);
-//                }
                 solutionList(edgeTo, end);
                 solutionWeight = distTo.get(removed);
                 outcome = SolverOutcome.SOLVED;
@@ -71,25 +61,22 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
             }
         }
     }
+
     private void nullChecker(Vertex v) {
         if (!distTo.containsKey(v)) {
             distTo.put(v, Double.POSITIVE_INFINITY);
         }
     }
 
-    private void solutionList(HashMap<Vertex, Vertex> edgeTo, Vertex goal) {
+    private void solutionList(HashMap edgeTo, Vertex goal) {
         Vertex e = goal;
-//        if (!edgeTo.containsKey(goal)) {
-//            solution = new LinkedList<>();
-//            return;
-//        }
         if (edgeTo.get(goal) == null && s.equals(goal)) {
             solution.add(s);
             return;
         }
         while (edgeTo.containsKey(goal) && !edgeTo.get(goal).equals(s)) {
-            solution.addFirst(edgeTo.get(goal));
-            goal = edgeTo.get(goal);
+            solution.addFirst((Vertex) edgeTo.get(goal));
+            goal = (Vertex) edgeTo.get(goal);
         }
         solution.addFirst(s);
         solution.addLast(e);
