@@ -14,6 +14,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
     private Vertex s;
     private HashMap<Vertex, Vertex> edgeTo;
 
+    /* The constructor for solving the best short path from start to goal */
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
         s = start;
         solution = new LinkedList<>();
@@ -68,15 +69,15 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
         }
     }
 
-    private void solutionList(HashMap edgeTo, Vertex goal) {
+    private void solutionList(HashMap h, Vertex goal) {
         Vertex e = goal;
-        if (edgeTo.get(goal) == null && s.equals(goal)) {
+        if (h.get(goal) == null && s.equals(goal)) {
             solution.add(s);
             return;
         }
-        while (edgeTo.containsKey(goal) && !edgeTo.get(goal).equals(s)) {
-            solution.addFirst((Vertex) edgeTo.get(goal));
-            goal = (Vertex) edgeTo.get(goal);
+        while (h.containsKey(goal) && !h.get(goal).equals(s)) {
+            solution.addFirst((Vertex) h.get(goal));
+            goal = (Vertex) h.get(goal);
         }
         solution.addFirst(s);
         solution.addLast(e);
