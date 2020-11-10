@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static bearmaps.proj2d.utils.Constants.SEMANTIC_STREET_GRAPH;
-import static bearmaps.proj2d.utils.Constants.ROUTE_LIST;
+import static bearmaps.proj2d.utils.Constants.*;
 
 /**
  * Handles requests from the web browser for map images. These images
@@ -84,9 +83,44 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
      */
     @Override
     public Map<String, Object> processRequest(Map<String, Double> requestParams, Response response) {
-        //System.out.println("yo, wanna know the parameters given by the web browser? They are:");
-        //System.out.println(requestParams);
+        System.out.println("yo, wanna know the parameters given by the web browser? They are:");
+        System.out.println(requestParams.get("lrlon"));
+        double lrlon = requestParams.get("lrlon");
+        double ullon = requestParams.get("ullon");
+        double w = requestParams.get("w");
+        double h = requestParams.get("h");
+        double ullat = requestParams.get("ullat");
+        double lrlat = requestParams.get("lrlat");
+        double lonDPP = (ROOT_LRLON - ROOT_ULLON) / TILE_SIZE;
+        double queryDPP = (lrlon - ullon) / w;
+        int depth = (int) (Math.log10(lonDPP / queryDPP) / Math.log10(2));
+        double k = Math.pow(2, depth) - 1;
+        double queryW = lrlon - ullon;
+        double queryH = ullat - lrlat;
+        double lonPerTileX = (ROOT_LRLON - ROOT_ULLON) / (Math.pow(2, depth));
+        double latPerTileY = (ROOT_LRLAT - ROOT_ULLAT) / (Math.pow(2, depth));
+        int x1 = (int) ((ullon - ROOT_ULLON) / lonPerTileX);
+        int y1 = (int) ((ullat - ROOT_ULLAT) / latPerTileY);
+        int x2 = (int) ((lrlon - ROOT_ULLON) / lonPerTileX);
+        int y2 = (int) ((lrlat - ROOT_ULLAT) / latPerTileY);
         Map<String, Object> results = new HashMap<>();
+        String[][] resultsString = new String[y2 - y1 + 1][x2 - x1 + 1];
+        double x1Dis = x1 * lonPerTileX + ROOT_ULLON;
+        double y2Dis = y2 * latPerTileY + ROOT_LRLAT;
+        for (int y = 0; y <= y2 - y1; y++) {
+            for (int x = 0; x <= x2 - x1; x++) {
+//                System.out.println("d"+depth+"_x"+x1+"_y"+y1+".png");
+                resultsString[y][x] = "d"+depth+"_x"+x + x1+"_y"+y + y1+".png";
+            }
+        }
+        System.out.print(resultsString);
+        results.put("render_grid", resultsString);
+        results.put("raster_ul_lon", x1);
+        results.put("raster_ul_lat", y1);
+        results.put("raster_lr_lon", x2);
+        results.put("raster_lr_lat", y2);
+        results.put("depth", depth);
+        results.put("query_success", true);
         System.out.println("Since you haven't implemented RasterAPIHandler.processRequest, nothing is displayed in "
                 + "your browser.");
         return results;
@@ -113,7 +147,7 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         results.put("raster_lr_lon", 0);
         results.put("raster_lr_lat", 0);
         results.put("depth", 0);
-        results.put("query_success", false);
+        results.put("query_success", true);
         return results;
     }
 
