@@ -88,15 +88,11 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         double lrlon = requestParams.get("lrlon");
         double ullon = requestParams.get("ullon");
         double w = requestParams.get("w");
-        double h = requestParams.get("h");
         double ullat = requestParams.get("ullat");
         double lrlat = requestParams.get("lrlat");
         double lonDPP = (ROOT_LRLON - ROOT_ULLON) / TILE_SIZE;
         double queryDPP = (lrlon - ullon) / w;
         int depth = (int) (Math.log10(lonDPP / queryDPP) / Math.log10(2));
-        double k = Math.pow(2, depth) - 1;
-        double queryW = lrlon - ullon;
-        double queryH = ullat - lrlat;
         double lonPerTileX = (ROOT_LRLON - ROOT_ULLON) / (Math.pow(2, depth));
         double latPerTileY = (ROOT_LRLAT - ROOT_ULLAT) / (Math.pow(2, depth));
         int x1 = (int) ((ullon - ROOT_ULLON) / lonPerTileX);
@@ -105,12 +101,10 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         int y2 = (int) ((lrlat - ROOT_ULLAT) / latPerTileY);
         Map<String, Object> results = new HashMap<>();
         String[][] resultsString = new String[y2 - y1 + 1][x2 - x1 + 1];
-        double x1Dis = x1 * lonPerTileX + ROOT_ULLON;
-        double y2Dis = y2 * latPerTileY + ROOT_LRLAT;
         for (int y = 0; y <= y2 - y1; y++) {
             for (int x = 0; x <= x2 - x1; x++) {
 //                System.out.println("d"+depth+"_x"+x1+"_y"+y1+".png");
-                resultsString[y][x] = "d"+depth+"_x"+x + x1+"_y"+y + y1+".png";
+                resultsString[y][x] = "d" + depth + "_x" + x + x1 + "_y" + y + y1 +".png";
             }
         }
         System.out.print(resultsString);
