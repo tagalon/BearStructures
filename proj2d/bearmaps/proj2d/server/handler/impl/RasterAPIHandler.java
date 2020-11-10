@@ -92,7 +92,12 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         double lrlat = requestParams.get("lrlat");
         double lonDPP = (ROOT_LRLON - ROOT_ULLON) / TILE_SIZE;
         double queryDPP = (lrlon - ullon) / w;
-        int depth = (int) (Math.log10(lonDPP / queryDPP) / Math.log10(2));
+        int depth = 0;
+        double determiner = lonDPP / queryDPP;
+        while (determiner > 1 && depth < 7) {
+            determiner /= 2;
+            depth += 1;
+        }
         double lonPerTileX = (ROOT_LRLON - ROOT_ULLON) / (Math.pow(2, depth));
         double latPerTileY = (ROOT_LRLAT - ROOT_ULLAT) / (Math.pow(2, depth));
         int x1 = (int) ((ullon - ROOT_ULLON) / lonPerTileX);
@@ -104,14 +109,16 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         for (int y = 0; y <= y2 - y1; y++) {
             for (int x = 0; x <= x2 - x1; x++) {
 //                System.out.println("d"+depth+"_x"+x1+"_y"+y1+".png");
-                resultsString[y][x] = "d" + depth + "_x" + x + x1 + "_y" + y + y1 +".png";
+                resultsString[y][x] = "d" + depth + "_x" + (x + x1) + "_y" + (y + y1) +".png";
             }
         }
         results.put("render_grid", resultsString);
-        results.put("raster_ul_lon", x1 * lonPerTileX + ROOT_ULLON);
-        results.put("raster_ul_lat", y1 * latPerTileY + ROOT_ULLAT);
-        results.put("raster_lr_lon", x2 * lonPerTileX + ROOT_LRLON);
-        results.put("raster_lr_lat", y2 * latPerTileY + ROOT_LRLAT);
+        double rastX1 = x1 * lonPerTileX + ROOT_ULLON;
+        double rastY1 = y1 * latPerTileY + ROOT_ULLAT;
+        results.put("raster_ul_lon", rastX1);
+        results.put("raster_ul_lat", rastY1);
+        results.put("raster_lr_lon", (x2 - x1 + 1) * (lonPerTileX) + rastX1);
+        results.put("raster_lr_lat", (y2 - y1 + 1) * (latPerTileY) + rastY1);
         results.put("depth", depth);
         results.put("query_success", true);
         return results;

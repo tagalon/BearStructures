@@ -44,17 +44,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * @return The id of the node in the graph closest to the target.
      */
     public long closest(double lon, double lat) {
-//        HashMap<Point, Node> searchMap = new HashMap<Point, Node>();
-//        for (Node n : getNodes()) {
-//            List<WeightedEdge<Long>> neighbors = neighbors(n.id());
-//            if (!neighbors.isEmpty()) {
-//                double x = n.lon();
-//                double y = n.lat();
-//                searchMap.put(new Point(x, y), n);
-//            }
-//        }
-//        List keys = new ArrayList(searchMap.keySet());
-//        WeirdPointSet nearestPoint = new WeirdPointSet(keys);
         Point closestPoint = nearestPoint.nearest(lon, lat);
         return searchMap.get(closestPoint).id();
     }
@@ -69,6 +58,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * cleaned <code>prefix</code>.
      */
     public List<String> getLocationsByPrefix(String prefix) {
+        String clean_prefix = cleanString(prefix);
         return new LinkedList<>();
     }
 
