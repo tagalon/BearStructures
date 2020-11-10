@@ -16,11 +16,23 @@ import java.util.*;
  * @author Alan Yao, Josh Hug, ________
  */
 public class AugmentedStreetMapGraph extends StreetMapGraph {
-
+    private WeirdPointSet nearestPoint;
+    private HashMap<Point, Node> searchMap;
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
         // You might find it helpful to uncomment the line below:
-         List<Node> nodes = this.getNodes();
+        List<Node> nodes = this.getNodes();
+        searchMap = new HashMap<>();
+        for (Node n : nodes) {
+            List<WeightedEdge<Long>> neighbors = neighbors(n.id());
+            if (!neighbors.isEmpty()) {
+                double x = n.lon();
+                double y = n.lat();
+                searchMap.put(new Point(x, y), n);
+            }
+        }
+        List keys = new ArrayList(searchMap.keySet());
+        nearestPoint = new WeirdPointSet(keys);
     }
 
 
@@ -32,17 +44,17 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * @return The id of the node in the graph closest to the target.
      */
     public long closest(double lon, double lat) {
-        HashMap<Point, Node> searchMap = new HashMap<Point, Node>();
-        for (Node n : getNodes()) {
-            List<WeightedEdge<Long>> neighbors = neighbors(n.id());
-            if (!neighbors.isEmpty()) {
-                double x = n.lon();
-                double y = n.lat();
-                searchMap.put(new Point(x, y), n);
-            }
-        }
-        List keys = new ArrayList(searchMap.keySet());
-        WeirdPointSet nearestPoint = new WeirdPointSet(keys);
+//        HashMap<Point, Node> searchMap = new HashMap<Point, Node>();
+//        for (Node n : getNodes()) {
+//            List<WeightedEdge<Long>> neighbors = neighbors(n.id());
+//            if (!neighbors.isEmpty()) {
+//                double x = n.lon();
+//                double y = n.lat();
+//                searchMap.put(new Point(x, y), n);
+//            }
+//        }
+//        List keys = new ArrayList(searchMap.keySet());
+//        WeirdPointSet nearestPoint = new WeirdPointSet(keys);
         Point closestPoint = nearestPoint.nearest(lon, lat);
         return searchMap.get(closestPoint).id();
     }

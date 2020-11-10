@@ -107,16 +107,13 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
                 resultsString[y][x] = "d" + depth + "_x" + x + x1 + "_y" + y + y1 +".png";
             }
         }
-        System.out.print(resultsString);
         results.put("render_grid", resultsString);
-        results.put("raster_ul_lon", x1);
-        results.put("raster_ul_lat", y1);
-        results.put("raster_lr_lon", x2);
-        results.put("raster_lr_lat", y2);
+        results.put("raster_ul_lon", x1 * lonPerTileX + ROOT_ULLON);
+        results.put("raster_ul_lat", y1 * latPerTileY + ROOT_ULLAT);
+        results.put("raster_lr_lon", x2 * lonPerTileX + ROOT_LRLON);
+        results.put("raster_lr_lat", y2 * latPerTileY + ROOT_LRLAT);
         results.put("depth", depth);
         results.put("query_success", true);
-        System.out.println("Since you haven't implemented RasterAPIHandler.processRequest, nothing is displayed in "
-                + "your browser.");
         return results;
     }
 
