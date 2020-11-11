@@ -19,12 +19,12 @@ import java.util.*;
 public class AugmentedStreetMapGraph extends StreetMapGraph {
     private WeirdPointSet nearestPoint;
     private HashMap<Point, Node> searchMap;
-    private List<Node> n;
+    private List<Node> listNodes;
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
         // You might find it helpful to uncomment the line below:
         List<Node> nodes = this.getNodes();
-        n = nodes;
+        listNodes = nodes;
         searchMap = new HashMap<>();
         for (Node n : nodes) {
             List<WeightedEdge<Long>> neighbors = neighbors(n.id());
@@ -64,8 +64,8 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         String cleanPrefix = cleanString(prefix);
         TrieSET locationPrefixes = new TrieSET();
         locationPrefixes.add(cleanPrefix);
-        for (Node node : n) {
-            if (locationPrefixes.contains(node.name())) {
+        for (Node node : listNodes) {
+            if (node.name() != null && locationPrefixes.contains(node.name())) {
                 locationPrefixes.add(node.name());
             }
         }
