@@ -66,10 +66,11 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         for (Node node : listNodes) {
             if (node.name().equals(null)) {
                 continue;
-            }
-            String cleanWord = cleanString(node.name());
-            if (cleanWord.startsWith(prefix) && node.name() != null) {
-                locationPrefixes.add(node.name());
+            } else {
+                String cleanWord = cleanString(node.name());
+                if (cleanWord.startsWith(prefix) && node.name() != null) {
+                    locationPrefixes.add(node.name());
+                }
             }
         }
         Iterable<String> locationIter = locationPrefixes.keysThatMatch(cleanPrefix);
