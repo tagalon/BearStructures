@@ -70,7 +70,15 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
             }
         }
         Iterable<String> locationIter = locationPrefixes.keysThatMatch(cleanPrefix);
-        List<String> locations = new ArrayList((Collection) locationIter.iterator());
+        List<String> locations = toList(locationIter.iterator());
+        return locations;
+    }
+
+    private List<String> toList(Iterator<String> i) {
+        List<String> locations = new ArrayList<>();
+        while (i.hasNext()) {
+            locations.add(i.next());
+        }
         return locations;
     }
 
