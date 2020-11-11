@@ -83,8 +83,6 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
      */
     @Override
     public Map<String, Object> processRequest(Map<String, Double> requestParams, Response response) {
-        System.out.println("yo, wanna know the parameters given by the web browser? They are:");
-        System.out.println(requestParams.get("lrlon"));
         double lrlon = requestParams.get("lrlon");
         double ullon = requestParams.get("ullon");
         double w = requestParams.get("w");
@@ -92,6 +90,8 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         double lrlat = requestParams.get("lrlat");
         double lonDPP = (ROOT_LRLON - ROOT_ULLON) / TILE_SIZE;
         double queryDPP = (lrlon - ullon) / w;
+        boolean leftCheck = ullon < ROOT_ULLON && ullat < ROOT_ULLAT;
+        boolean rightCheck = lrlon > ROOT_LRLON && lrlat > ROOT_LRLAT;
         int depth = 0;
         double determiner = lonDPP / queryDPP;
         while (determiner > 1 && depth < 7) {
@@ -108,9 +108,16 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         String[][] resultsString = new String[y2 - y1 + 1][x2 - x1 + 1];
         for (int y = 0; y <= y2 - y1; y++) {
             for (int x = 0; x <= x2 - x1; x++) {
-//                System.out.println("d"+depth+"_x"+x1+"_y"+y1+".png");
-                resultsString[y][x] = "d" + depth + "_x" + (x + x1) + "_y" + (y + y1) +".png";
+                resultsString[y][x] = "d" + depth + "_x" + (x + x1) + "_y" + (y + y1) + ".png";
             }
+        }
+        boolean querySuccess;
+        if (ullon > lrlon && ullat > lrlat) {
+            querySuccess = false;
+        } else if (leftCheck & rightCheck) {
+            querySuccess = false;
+        } else {
+            querySuccess = true;
         }
         results.put("render_grid", resultsString);
         double rastX1 = x1 * lonPerTileX + ROOT_ULLON;
@@ -120,7 +127,7 @@ public class RasterAPIHandler extends APIRouteHandler<Map<String, Double>, Map<S
         results.put("raster_lr_lon", (x2 - x1 + 1) * (lonPerTileX) + rastX1);
         results.put("raster_lr_lat", (y2 - y1 + 1) * (latPerTileY) + rastY1);
         results.put("depth", depth);
-        results.put("query_success", true);
+        results.put("query_success", querySuccess);
         return results;
     }
 
