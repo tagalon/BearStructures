@@ -64,6 +64,9 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         String cleanPrefix = cleanString(prefix);
         TrieSET locationPrefixes = new TrieSET();
         for (Node node : listNodes) {
+            if (node.name().equals(null)) {
+                continue;
+            }
             String cleanWord = cleanString(node.name());
             if (cleanWord.startsWith(prefix) && node.name() != null) {
                 locationPrefixes.add(node.name());
