@@ -66,7 +66,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         for (Node node : listNodes) {
             if (node.name() == null) {
                 continue;
-            } else if (locationPrefixes.size() != 256){
+            } else if (locationPrefixes.size() < 256){
                 String cleanWord = cleanString(node.name());
                 if (cleanWord.startsWith(prefix) && node.name() != null) {
                     locationPrefixes.add(node.name());
