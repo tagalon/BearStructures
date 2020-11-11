@@ -5,6 +5,7 @@ import bearmaps.proj2ab.WeirdPointSet;
 import bearmaps.proj2c.WeightedEdge;
 import bearmaps.proj2c.streetmap.StreetMapGraph;
 import bearmaps.proj2c.streetmap.Node;
+import edu.princeton.cs.algs4.TrieSET;
 
 import java.util.*;
 
@@ -18,10 +19,12 @@ import java.util.*;
 public class AugmentedStreetMapGraph extends StreetMapGraph {
     private WeirdPointSet nearestPoint;
     private HashMap<Point, Node> searchMap;
+    private List<Node> n;
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
         // You might find it helpful to uncomment the line below:
         List<Node> nodes = this.getNodes();
+        n = nodes;
         searchMap = new HashMap<>();
         for (Node n : nodes) {
             List<WeightedEdge<Long>> neighbors = neighbors(n.id());
@@ -58,8 +61,17 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * cleaned <code>prefix</code>.
      */
     public List<String> getLocationsByPrefix(String prefix) {
-        String clean_prefix = cleanString(prefix);
-        return new LinkedList<>();
+        String cleanPrefix = cleanString(prefix);
+        TrieSET locationPrefixes = new TrieSET();
+        locationPrefixes.add(cleanPrefix);
+        for (Node node : n) {
+            if (locationPrefixes.contains(node.name())) {
+                locationPrefixes.add(node.name());
+            }
+        }
+        Iterable<String> locationIter = locationPrefixes.keysThatMatch(cleanPrefix);
+        List<String> locations = new ArrayList((Collection) locationIter.iterator());
+        return locations;
     }
 
     /**
