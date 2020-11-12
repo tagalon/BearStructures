@@ -69,13 +69,11 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 continue;
             }
             String cleanWord = cleanString(node.name());
-            if (!locationPrefixes.contains(cleanWord)){
-                if (cleanWord.startsWith(prefix)) {
-                    locationPrefixes.add(cleanWord);
-                    locations.put(cleanWord, node.name());
+            if (cleanWord.startsWith(prefix)) {
+                locationPrefixes.add(cleanWord);
+                locations.put(cleanWord, node.name());
                 }
             }
-        }
         Iterable<String> locationIter = locationPrefixes.keysWithPrefix(prefix);
         List<String> notCLocations = toList(locationIter.iterator());
         List<String> finalLoc = new ArrayList<>();
