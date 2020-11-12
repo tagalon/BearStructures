@@ -1,3 +1,4 @@
+/* @source Princeton Library Link: */
 package bearmaps.proj2d;
 import java.util.Iterator;
 public class TrieSet implements Iterable<String> {
