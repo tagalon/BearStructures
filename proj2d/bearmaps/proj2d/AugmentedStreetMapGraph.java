@@ -25,6 +25,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     HashMap<String, Set<Node>> locations;
     HashMap<String, LinkedList<Node>> duplicates;
     private int index;
+    ArrayList<Map<String, Object>> allNames;
     private TrieSet locationPrefixes;
     private String p;
     public AugmentedStreetMapGraph(String dbPath) {
@@ -33,6 +34,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         // You might find it helpful to uncomment the line below:
         List<Node> nodes = this.getNodes();
         listNodes = nodes;
+        allNames = new ArrayList<>();
         searchMap = new HashMap<>();
         locations = new HashMap<>();
         duplicates = new HashMap<>();
@@ -132,9 +134,8 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      */
     public List<Map<String, Object>> getLocations(String locationName) {
         LinkedList names = duplicates.get(cleanString(locationName));
-        ArrayList<Map<String, Object>> allNames = new ArrayList();
         while (!names.isEmpty()) {
-            Node n = (Node) names.removeLast();
+            Node n = (Node) names.removeFirst();
             HashMap<String, Object> input = new HashMap<>();
             input.put("name", n.name());
             input.put("lon", n.lon());
