@@ -35,6 +35,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         listNodes = nodes;
         searchMap = new HashMap<>();
         locations = new HashMap<>();
+        duplicates = new HashMap<>();
         locationPrefixes = new TrieSet();
         for (Node n : nodes) {
             List<WeightedEdge<Long>> neighbors = neighbors(n.id());
