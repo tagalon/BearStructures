@@ -63,6 +63,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     public List<String> getLocationsByPrefix(String prefix) {
         String cleanPrefix = cleanString(prefix);
         TrieSet locationPrefixes = new TrieSet();
+        HashMap<String, String> locations = new HashMap<>();
         for (Node node : listNodes) {
             if (node.name() == null) {
                 continue;
@@ -71,16 +72,15 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
             if (!locationPrefixes.contains(cleanWord)){
                 if (cleanWord.startsWith(prefix)) {
                     locationPrefixes.add(cleanWord);
+                    locations.put(cleanWord, node.name());
                 }
             }
         }
         Iterable<String> locationIter = locationPrefixes.keysWithPrefix(prefix);
-        List<String> locations = toList(locationIter.iterator());
+        List<String> notCLocations = toList(locationIter.iterator());
         List<String> finalLoc = new ArrayList<>();
-        for (Node node : listNodes) {
-            if(locations.contains(cleanString(node.name()))) {
-                finalLoc.add(node.name());
-            }
+        for (String s : notCLocations) {
+            finalLoc.add(locations.get(s));
         }
         return finalLoc;
     }
