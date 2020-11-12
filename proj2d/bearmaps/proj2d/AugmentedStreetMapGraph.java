@@ -65,10 +65,10 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
         TrieSet locationPrefixes = new TrieSet();
         locationPrefixes.add(prefix);
         for (Node node : listNodes) {
+            String cleanWord = cleanString(node.name());
             if (node.name() == null) {
                 continue;
-            } else if (!locationPrefixes.contains(node.name())){
-                String cleanWord = cleanString(node.name());
+            } else if (!locationPrefixes.contains(cleanWord)){
                 if (cleanWord.startsWith(prefix)) {
                     locationPrefixes.add(cleanWord);
                 }
@@ -115,5 +115,4 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     private static String cleanString(String s) {
         return s.replaceAll("[^a-zA-Z ]", "").toLowerCase();
     }
-
 }
