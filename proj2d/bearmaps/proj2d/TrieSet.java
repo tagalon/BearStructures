@@ -1,7 +1,7 @@
 package bearmaps.proj2d;
 import java.util.Iterator;
 public class TrieSet implements Iterable<String> {
-    private static final int R = 27;        // extended ASCII
+    private static final int R = 28;        // extended ASCII
 
     private Node root;      // root of trie
     private int n;          // number of keys in trie
@@ -37,6 +37,9 @@ public class TrieSet implements Iterable<String> {
         if (x == null) return null;
         if (d == key.length()) return x;
         int c = key.charAt(d) - 97;
+        if (c == -65) {
+            c = 27;
+        }
         return get(x.next[c], key, d + 1);
     }
 
@@ -58,6 +61,9 @@ public class TrieSet implements Iterable<String> {
             x.isString = true;
         } else {
             int c = key.charAt(d) - 97;
+            if (c == -65) {
+                c = 27;
+            }
             x.next[c] = add(x.next[c], key, d + 1);
         }
         return x;
@@ -109,9 +115,15 @@ public class TrieSet implements Iterable<String> {
     private void collect(Node x, StringBuilder prefix, Queue<String> results) {
         if (x == null) return;
         if (x.isString) results.enqueue(prefix.toString());
-        for (char c = 0; c < R; c++) {
+        for (int c = 0; c < R; c++) {
+            if (c == 27) {
+                c = -65;
+            }
             char letter = (char) (c + 97);
             prefix.append(letter);
+            if (c == -65) {
+                c = 27;
+            }
             collect(x.next[c], prefix, results);
             prefix.deleteCharAt(prefix.length() - 1);
         }
@@ -150,7 +162,10 @@ public class TrieSet implements Iterable<String> {
         } else {
             char letter = (char) (num + 97);
             prefix.append(letter);
-            collect(x.next[c], prefix, pattern, results);
+            if (num == -65) {
+                num = 27;
+            }
+            collect(x.next[num], prefix, pattern, results);
             prefix.deleteCharAt(prefix.length() - 1);
         }
     }
@@ -213,15 +228,15 @@ public class TrieSet implements Iterable<String> {
     }
 
     public static void main(String[] args) {
-//        TrieSet test = new TrieSet();
-//        test.add("sa");
-//        test.add("same");
-//        test.add("sam");
-//        test.add("samuel");
-//        Iterable<String> words = test.keysWithPrefix("sa");
-//        for (String s : test.keysWithPrefix("sa")) {
-//            System.out.println(s);
-//        }
-//        System.out.println("sa");
+        TrieSet test = new TrieSet();
+        test.add("sa");
+        test.add("same");
+        test.add("sam");
+        test.add("samuel");
+        Iterable<String> words = test.keysWithPrefix("sa");
+        for (String s : test.keysWithPrefix("sa")) {
+            System.out.println(s);
+        }
+        System.out.println("sa");
     }
 }
