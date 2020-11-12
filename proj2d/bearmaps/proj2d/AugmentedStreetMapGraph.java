@@ -7,6 +7,8 @@ import bearmaps.proj2c.streetmap.StreetMapGraph;
 import bearmaps.proj2c.streetmap.Node;
 import edu.princeton.cs.algs4.TrieSET;
 
+import javax.naming.ldap.HasControls;
+import javax.print.attribute.HashAttributeSet;
 import java.util.*;
 
 /**
@@ -20,18 +22,46 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
     private WeirdPointSet nearestPoint;
     private HashMap<Point, Node> searchMap;
     private List<Node> listNodes;
+    HashMap<String, Set<Node>> locations;
+    HashMap<String, LinkedList<Node>> duplicates;
+    private int index;
+    private TrieSet locationPrefixes;
+    private String p;
     public AugmentedStreetMapGraph(String dbPath) {
         super(dbPath);
+        index = 0;
         // You might find it helpful to uncomment the line below:
         List<Node> nodes = this.getNodes();
         listNodes = nodes;
         searchMap = new HashMap<>();
+        locations = new HashMap<>();
+        locationPrefixes = new TrieSet();
         for (Node n : nodes) {
             List<WeightedEdge<Long>> neighbors = neighbors(n.id());
             if (!neighbors.isEmpty()) {
                 double x = n.lon();
                 double y = n.lat();
                 searchMap.put(new Point(x, y), n);
+            }
+            if (n.name() == null) {
+                continue;
+            } else {
+                String cleanNode = cleanString(n.name());
+                locationPrefixes.add(cleanNode);
+                if (!locations.containsKey(cleanNode)) {
+                    HashSet<Node> input = new HashSet<>();
+                    input.add(n);
+                    locations.put(cleanNode, input);
+                } else {
+                    locations.get(cleanNode).add(n);
+                }
+                if (!duplicates.containsKey(cleanNode)) {
+                    LinkedList<Node> inputL = new LinkedList<>();
+                    inputL.add(n);
+                    duplicates.put(cleanNode, inputL);
+                } else {
+                    duplicates.get(cleanNode).add(n);
+                }
             }
         }
         List keys = new ArrayList(searchMap.keySet());
@@ -61,38 +91,30 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * cleaned <code>prefix</code>.
      */
     public List<String> getLocationsByPrefix(String prefix) {
-        String cleanPrefix = cleanString(prefix);
-        TrieSet locationPrefixes = new TrieSet();
-        HashMap<Integer, String> locations = new HashMap<>();
-        int index = 0;
-        for (Node node : listNodes) {
-            if (node.name() == null) {
-                continue;
-            }
-            String cleanWord = cleanString(node.name());
-            if (cleanWord.startsWith(prefix)) {
-                locationPrefixes.add(cleanWord);
-                locations.put(index, node.name());
-                index += 1;
-                }
-            }
+        p = prefix;
+//        TrieSet locationPrefixes = new TrieSet();
+//        int index = 0;
+//        for (Node node : listNodes) {
+//            if (node.name() == null) {
+//                continue;
+//            }
+//            String cleanWord = cleanString(node.name());
+//            if (cleanWord.startsWith(prefix)) {
+//                locationPrefixes.add(cleanWord);
+//                locations.put(index, node.name());
+//                index += 1;
+//                }
+//            }
         Iterable<String> locationIter = locationPrefixes.keysWithPrefix(prefix);
-        List<String> notCLocations = toList(locationIter.iterator());
         List<String> finalLoc = new ArrayList<>();
-        for (int i = 0; i < index; i ++) {
-            if (notCLocations.contains(cleanString(locations.get(i))))
-            finalLoc.add(locations.get(i));
+        for (String s : locationIter) {
+            for (Node n : locations.get(s)) {
+                finalLoc.add(n.name());
+            }
         }
         return finalLoc;
     }
 
-    private List<String> toList(Iterator<String> i) {
-        List<String> locations = new ArrayList<>();
-        while (i.hasNext()) {
-            locations.add(i.next());
-        }
-        return locations;
-    }
 
     /**
      * For Project Part III (gold points)
