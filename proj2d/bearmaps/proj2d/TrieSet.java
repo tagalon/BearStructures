@@ -37,6 +37,9 @@ public class TrieSet implements Iterable<String> {
         if (x == null) return null;
         if (d == key.length()) return x;
         int c = key.charAt(d) - 97;
+        if (c < 0) {
+            c += 129;
+        }
         return get(x.next[c], key, d + 1);
     }
 
