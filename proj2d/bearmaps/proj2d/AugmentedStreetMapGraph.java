@@ -131,7 +131,18 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      * "id" -> Number, The id of the node. <br>
      */
     public List<Map<String, Object>> getLocations(String locationName) {
-        return new LinkedList<>();
+        LinkedList names = duplicates.get(cleanString(locationName));
+        ArrayList<Map<String, Object> allNames = new ArrayList();
+        while (!names.isEmpty()) {
+            Node n = (Node) names.removeLast();
+            HashMap<String, Object> input = new HashMap<>();
+            input.put("name", n.name());
+            input.put("lon", n.lon());
+            input.put("id", n.id());
+            input.put("lat", n.lat());
+            allNames.add(input);
+        }
+        return allNames;
     }
 
 
