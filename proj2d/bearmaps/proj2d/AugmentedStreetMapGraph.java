@@ -71,7 +71,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 System.out.println(node.name());
                 String cleanWord = cleanString(node.name());
                 if (cleanWord.startsWith(prefix)) {
-                    locationPrefixes.add(node.name());
+                    locationPrefixes.add(cleanWord);
                 }
             }
         }
