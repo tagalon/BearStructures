@@ -93,19 +93,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      */
     public List<String> getLocationsByPrefix(String prefix) {
         p = prefix;
-//        TrieSet locationPrefixes = new TrieSet();
-//        int index = 0;
-//        for (Node node : listNodes) {
-//            if (node.name() == null) {
-//                continue;
-//            }
-//            String cleanWord = cleanString(node.name());
-//            if (cleanWord.startsWith(prefix)) {
-//                locationPrefixes.add(cleanWord);
-//                locations.put(index, node.name());
-//                index += 1;
-//                }
-//            }
         Iterable<String> locationIter = locationPrefixes.keysWithPrefix(prefix);
         List<String> finalLoc = new ArrayList<>();
         for (String s : locationIter) {
@@ -142,12 +129,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
             input.put("lat", n.lat());
             allNames.add(input);
         }
-//        HashMap<String, Object> input = new HashMap<>();
-//        input.put("name", n.name());
-//        input.put("lon", n.lon());
-//        input.put("id", n.id());
-//        input.put("lat", n.lat());
-//        allNames.add(input);
         return allNames;
     }
 
@@ -160,61 +141,5 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      */
     private static String cleanString(String s) {
         return s.replaceAll("[^a-zA-Z ]", "").toLowerCase();
-    }
-    public static void main(String[] args) {
-        String[] s1 = {"P and M Market", "P224 GPS Observatory", "Pappy's", "Papa John's", "Pardee",
-                "Party Sushi", "Pariah House", "Paris Baguette", "Park Avenue Bar & Grill", "Park Day School",
-        "Park Hills Fountain", "Pacific Boychoir Academy", "Pacific Salces - Kitchen", "Bath",
-                "Electronics", "Pacific Standard Taproom", "Pacific E-Bike", "Pacific Film Archive Theater",
-                "Paco Collars", "Pasta Pomodoro", "Padre", "Pat Brown's Grille", "Paul's Shoe Repair", "Pavé",
-                "Paisan", "Payn's Statonery - Office Supplies", "Panoramic Hill", "Premier Auto Body",
-                "Premier Cru Fine Wines", "Premier Gru Wines", "Priya Indian Cuisine", "Prince st",
-                "Propaganda", "Professor Squirrel Gift Shop", "Progressive Baptist Church", "Prolube",
-        "Public Parking", "Public Storage", "Purplekow", "Pure Barre", "Pucquio", "Punjab Bazaar",
-                "Peralta Child Development Center", "Perry Temple Church of God in Christ", "Pet Club", "Pet Food Express",
-        "PETS Emergency and Referral", "Petco", "Peter's Automotive Service", "PetFood Express", "Peets", "Peet's Coffee",
-        "Peets Coffee & Tea", "Peet's Coffee & Tea", "Peet's Coffee and Tea", "Pegasus", "Pegasus Books",
-                "Peoples Car Wash", "People's Cafe", "Pf Chang's Chinese Bistro", "Pharmaca", "Pharmica",
-                "Phat Beets Produce", "Phat Matt's BBQ", "Philips Temple Church", "Philz Coffee", "Physics-Astronomy Library",
-        "Pipeline Coffee Cafe", "PiQ", "Picnic Area #1", "Picnic Area #2", "Picoso", "Pier One Imports",
-        "Piedmont", "Piedmont & 41st", "Piedmont & Yosemite", "Piedmont Avenue", "Piedmont Avenue Branch Oakland Public Library",
-                "Piedmont Recreation Center", "Piedmont Center for the Arts", "Piedmont Chiropractic: Laurie Wonnell",
-        "DC", "Piedmont Station Oakland Post Office", "Piedmont USD (office)", "Piedmont Grocery",
-                "Piedmont House", "Piedmont Lane Gallery", "Pieology", "Pizza My Heart", "Pizza Moda",
-                "Pizzahhh!", "Pizzaiolo", "Pin-up Parlor", "Pioneer Bicycles", "Pyung Chang Tofu House",
-                "Place for sustainable living", "Platano", "Plate IQ", "Plearn Thai Restaurant",
-        "Popeyes Louisiana Kitchen", "Poplar Playground", "Pottery Barn", "Poets Corner",
-                "Poulet", "Powell's Sweet Shoppe", "Powis Parker Inc.", "Poki Poke", "Polished Nail Salon",
-        "Pollo's", "Ponzo Charles Dimensions in Hair for Men and Women"};
-//        String[] s2 =[Pacific Boychoir Academy, Pacific E-Bike, Pacific Film Archive Theater,
-//                Pacific Salces - Kitchen, Bath, Electronics, Pacific Standard Taproom,
-//        Paco Collars, Padre, Paisan, Panoramic Hill, Papa John's, Pappy's, Pardee,
-//                Pariah House, Paris Baguette, Park Avenue Bar & Grill, Park Day School,
-//        Park Hills Fountain, Party Sushi, Pasta Pomodoro, Pat Brown's Grille,
-//        Paul's Shoe Repair, Pavé, Payn's Statonery - Office Supplies, Peets, Peet's Coffee,
-//        Peet's Coffee and Tea, Peet's Coffee & Tea, Pegasus, Pegasus Books, People's Cafe,
-//        Peoples Car Wash, Peralta Child Development Center,
-//                Perry Temple Church of God in Christ, Petco, Peter's Automotive Service,
-//        PetFood Express, PETS Emergency and Referral, Pet Club, Pet Food Express,
-//        Pf Chang's Chinese Bistro, Pharmaca, Pharmica, Phat Beets Produce,
-//        Phat Matt's BBQ, Philips Temple Church, Philz Coffee, Physics-Astronomy Library,
-//        Picnic Area #2, Picoso, Piedmont, Piedmont Avenue,
-//                Piedmont Avenue Branch Oakland Public Library, Piedmont Center for the Arts,
-//        Piedmont Chiropractic: Laurie Wonnell, DC, Piedmont Grocery, Piedmont House,
-//                Piedmont Lane Gallery, Piedmont Recreation Center,
-//        Piedmont Station Oakland Post Office, Piedmont USD (office),
-//                Piedmont & 41st, Piedmont & Yosemite, Pieology, Pier One Imports, Pin-up Parlor,
-//                Pioneer Bicycles, Pipeline Coffee Cafe, PiQ, Pizzahhh!, Pizzaiolo,
-//                Pizza Moda, Pizza My Heart, Place for sustainable living, Platano, Plate IQ,
-//                Plearn Thai Restaurant, Poets Corner, Poki Poke, Polished Nail Salon, Pollo's,
-//        Ponzo Charles Dimensions in Hair for Men and Women, Popeyes Louisiana Kitchen,
-//        Poplar Playground, Pottery Barn, Poulet, Powell's Sweet Shoppe, Powis Parker Inc.,
-//        Premier Auto Body, Premier Cru Fine Wines, Premier Gru Wines, Prince st,
-//                Priya Indian Cuisine, Professor Squirrel Gift Shop, Progressive Baptist Church,
-//        Prolube, Propaganda, Public Parking, Public Storage, Pucquio, Punjab Bazaar,
-//                Pure Barre"", "Purplekow", "Pyung Chang Tofu House", "P and M Market", "P224 GPS Observatory"};
-        String test1 = "Peets Coffee & Tea";
-        String test2 = "Peet's Coffee & Tea";
-        System.out.println(cleanString(test1) + " " + cleanString(test2));
     }
 }
