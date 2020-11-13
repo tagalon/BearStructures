@@ -48,7 +48,7 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 continue;
             } else {
                 String cleanNode = cleanString(n.name());
-                if (!duplicates.containsKey(cleanNode)) {
+                if (duplicates.get(cleanNode) == null) {
                     LinkedList<Node> inputL = new LinkedList<>();
                     inputL.add(n);
                     duplicates.put(cleanNode, inputL);
@@ -132,9 +132,12 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
      */
     public List<Map<String, Object>> getLocations(String locationName) {
         LinkedList names = duplicates.get(cleanString(locationName));
+        if (names.isEmpty()) {
+            return null;
+        }
         ArrayList<Map<String, Object>> allNames = new ArrayList<>();
         while (!names.isEmpty()) {
-            Node n = (Node) names.removeFirst();
+            Node n = (Node) names.remove();
             HashMap<String, Object> input = new HashMap<>();
             input.put("name", n.name());
             input.put("lon", n.lon());
