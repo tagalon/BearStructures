@@ -1,3 +1,4 @@
+/* @source Princeton Library Link:https://algs4.cs.princeton.edu/13stacks/Queue.java.html */
 package bearmaps.proj2d;
 import java.util.Iterator;
 import java.util.NoSuchElementException;

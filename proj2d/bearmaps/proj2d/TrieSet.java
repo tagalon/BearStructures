@@ -1,4 +1,4 @@
-/* @source Princeton Library Link: */
+/* @source Princeton Library Link:https://algs4.cs.princeton.edu/52trie/TrieSET.java.html */
 package bearmaps.proj2d;
 import java.util.Iterator;
 public class TrieSet implements Iterable<String> {
