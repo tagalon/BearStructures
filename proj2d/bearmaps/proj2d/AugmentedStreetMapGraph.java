@@ -48,6 +48,13 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                 continue;
             } else {
                 String cleanNode = cleanString(n.name());
+                if (!duplicates.containsKey(cleanNode)) {
+                    LinkedList<Node> inputL = new LinkedList<>();
+                    inputL.add(n);
+                    duplicates.put(cleanNode, inputL);
+                } else {
+                    duplicates.get(cleanNode).add(n);
+                }
                 locationPrefixes.add(cleanNode);
                 if (!locations.containsKey(cleanNode)) {
                     HashSet<Node> input = new HashSet<>();
@@ -55,13 +62,6 @@ public class AugmentedStreetMapGraph extends StreetMapGraph {
                     locations.put(cleanNode, input);
                 } else {
                     locations.get(cleanNode).add(n);
-                }
-                if (!duplicates.containsKey(cleanNode)) {
-                    LinkedList<Node> inputL = new LinkedList<>();
-                    inputL.add(n);
-                    duplicates.put(cleanNode, inputL);
-                } else {
-                    duplicates.get(cleanNode).add(n);
                 }
             }
         }
