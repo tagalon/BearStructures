@@ -12,7 +12,7 @@ import java.util.Random;
  * Draws a world consisting of hexagonal regions.
  */
 public class HexWorld {
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        Tessellation t = new Tessellation(3);
 //        int width = t.getWidth();
 //        int height = t.getHeight();
@@ -38,4 +38,3 @@ public class HexWorld {
 //            world[position.getX()][position.getY()] = h.getTile();
 //        }
     }
-}
