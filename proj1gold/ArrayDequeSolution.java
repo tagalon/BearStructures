@@ -29,4 +29,5 @@ public class ArrayDequeSolution<Item> extends LinkedList<Item> {
             return null;
         }
     }
+
 }
