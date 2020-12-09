@@ -7,7 +7,6 @@ public class TestArrayDequeGold {
     public void testGoldAD() {
         ArrayDequeSolution sol = new ArrayDequeSolution<Integer>();
         StudentArrayDeque test = new StudentArrayDeque<Integer>();
-        for (int a = 0; a < 3; a++) {
             String message = "\n";
             //@source StudentArrayDequeLauncher.java
             for (int i = 0; i < 10; i += 1) {
@@ -23,6 +22,7 @@ public class TestArrayDequeGold {
                     message += "addFirst("+i+")\n";
                 }
             }
+            test.printDeque();
             for (int i = 0; i < 10; i++) {
                 Integer solRemove = null;
                 Integer testRemove = null;
@@ -49,10 +49,9 @@ public class TestArrayDequeGold {
                     if (solRemove != null && testRemove != null) {
                         Integer actual = testRemove;
                         Integer expected = solRemove;
-                        assertEquals(message+"removeFirst()", actual, expected);
+                        assertEquals(message+"removeLast()", actual, expected);
                     }
                 }
             }
-        }
     }
 }
