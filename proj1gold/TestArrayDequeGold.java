@@ -9,7 +9,7 @@ public class TestArrayDequeGold {
         StudentArrayDeque test = new StudentArrayDeque<Integer>();
             String message = "\n";
             //@source StudentArrayDequeLauncher.java
-            for (int i = 0; i < 100; i += 1) {
+            for (int i = 0; i < 10; i += 1) {
                 double randomNum = StdRandom.uniform();
 
                 if (randomNum < 0.5) {
@@ -22,7 +22,8 @@ public class TestArrayDequeGold {
                     message += "addFirst("+i+")\n";
                 }
             }
-            for (int i = 0; i < 100; i++) {
+            test.printDeque();
+            for (int i = 0; i < 10; i++) {
                 Integer solRemove = null;
                 Integer testRemove = null;
                 double randomNum = StdRandom.uniform();
@@ -33,11 +34,12 @@ public class TestArrayDequeGold {
                     if (!test.isEmpty()) {
                         testRemove = (Integer) test.removeFirst();
                     }
-                    if (solRemove != null && testRemove != null) {
+                    if (solRemove != null && testRemove != null && !solRemove.equals(testRemove)) {
                         Integer actual = testRemove;
                         Integer expected = solRemove;
                         assertEquals(message+"removeFirst()", actual, expected);
                     }
+                    message += "removeLast()\n";
                 } else {
                     if (!sol.isEmpty()) {
                         solRemove = (Integer) sol.removeLast();
@@ -45,11 +47,12 @@ public class TestArrayDequeGold {
                     if (!test.isEmpty()) {
                         testRemove = (Integer) test.removeLast();
                     }
-                    if (solRemove != null && testRemove != null) {
+                    if (solRemove != null && testRemove != null && !solRemove.equals(testRemove)) {
                         Integer actual = testRemove;
                         Integer expected = solRemove;
                         assertEquals(message+"removeLast()", actual, expected);
                     }
+                    message += "removeLast()\n";
                 }
             }
     }

@@ -27,6 +27,14 @@ public class StudentArrayDequeLauncher {
         sad2.addLast(9);
         System.out.println(sad1.removeLast());
         System.out.println(sad2.removeLast());
+        System.out.println(sad1.removeLast());
+        System.out.println(sad2.removeLast());
+        System.out.println(sad1.removeLast());
+        System.out.println(sad2.removeLast());
+        System.out.println(sad1.removeLast());
+        System.out.println(sad2.removeLast());
+        System.out.println(sad1.removeLast());
+        System.out.println(sad2.removeLast());
 //        for (int i = 0; i < 10; i += 1) {
 //            double numberBetweenZeroAndOne = StdRandom.uniform();
 //
