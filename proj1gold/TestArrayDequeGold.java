@@ -22,7 +22,6 @@ public class TestArrayDequeGold {
                     message += "addFirst("+i+")\n";
                 }
             }
-            test.printDeque();
             for (int i = 0; i < 10; i++) {
                 Integer solRemove = null;
                 Integer testRemove = null;
